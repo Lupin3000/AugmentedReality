@@ -139,7 +139,7 @@ To generate a marker, simply run the script `dev/generate_marker.py`.
 
 Print out the marker(s) on paper, cut them and glue the printed paper onto cardboard (_for stabilization_).
 
-> In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE**.
+> In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 
 > Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in `ar_images.py` and `ar_videos.py` if necessary.
 > 
