@@ -52,7 +52,9 @@ $ tree .
 
 The `root` folder of the project contains the files: `requirements.txt`, `ar_marker_id.py`, `ar_images.py` and `ar_videos.py`. Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for Augmented Reality (AR).
 
-The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation. In the `src/` folder you will find images and videos that are used for the AR examples.
+The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation.
+
+In the `src/` folder you will find images `src/photos/` and videos `src/videos/` that are used for the AR examples.
 
 In the `dev/img/` subfolder you will find the file `pattern.png`. This is needed to be printed out for camera calibration.
 
