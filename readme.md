@@ -145,6 +145,8 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 > 
 > If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in `ar_marker_ids.py`, too.
 
+_**Note:** To follow the examples, you should print out markers with id `0` and `1`._
+
 ## Run examples
 
 - The file `ar_marker_ids.py` shows all detected markers and the respective ID.
