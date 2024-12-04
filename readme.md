@@ -52,17 +52,12 @@ $ tree .
 
 **Description**
 
-The `root` folder of the project contains the files: `requirements.txt`, `ar_marker_id.py`, `ar_images.py` and `ar_videos.py`. Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for Augmented Reality (AR).
-
-The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation.
-
-In the `src/` folder you will find two images `src/photos/` and two videos `src/videos/` that are used for the AR examples (_`ar_images.py` and `ar_videos.py`_).
-
-In the `dev/img/` subfolder you will find the file `pattern.png`. This pattern is needed to be printed out for camera calibration.
-
-When you create new markers using the Python script `dev/generate_marker.py`, the markers are saved as *.jpg into the new subfolder within the `dev/markers/`.
-
-If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
+- The `root` folder of the project contains the files: `requirements.txt`, `ar_marker_id.py`, `ar_images.py` and `ar_videos.py`. Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for Augmented Reality (AR).
+- The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation.
+- In the `src/` folder you will find two images `src/photos/` and two videos `src/videos/` that are used for the AR examples (_`ar_images.py` and `ar_videos.py`_).
+- In the `dev/img/` subfolder you will find the file `pattern.png`. This pattern is needed to be printed out for camera calibration.
+- When you create new markers using the Python script `dev/generate_marker.py`, the markers are saved as *.jpg into the new subfolder within the `dev/markers/`.
+- If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
 
 ## Prepare a local development environment
 Various Python modules/libraries are used in this project. It is therefore recommended to use Python Virtual Environment. The necessary modules/libraries are listed in the `requirements.txt` file.
