@@ -54,9 +54,9 @@ The `root` folder of the project contains the files: `requirements.txt`, `ar_mar
 
 The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation.
 
-In the `src/` folder you will find images `src/photos/` and videos `src/videos/` that are used for the AR examples.
+In the `src/` folder you will find two images `src/photos/` and two videos `src/videos/` that are used for the AR examples (_`ar_images.py` and `ar_videos.py`_).
 
-In the `dev/img/` subfolder you will find the file `pattern.png`. This is needed to be printed out for camera calibration.
+In the `dev/img/` subfolder you will find the file `pattern.png`. This pattern is needed to be printed out for camera calibration.
 
 When you create new markers using the Python script `dev/generate_marker.py`, they are saved to a new subfolder within the `dev/markers/` folder.
 
