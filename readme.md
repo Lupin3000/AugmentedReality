@@ -121,7 +121,7 @@ You can create your own ArUco markers with the Python script `dev/generate_marke
 
 - The respective ArUco Markers is set in the constant: **ARUCO_DICT_ID**.
 - The respective ArUco Marker ID is set in the constant: **ARUCO_MARKER_ID**
-- The size of ArUco Markers is set in in the constant: **ARUCO_MARKER_SIZE**
+- The size of ArUco Markers is set in the constant: **ARUCO_MARKER_SIZE**
 
 For example, the default of **ARUCO_DICT_ID** is set used is: `DICT_4X4_50`, which contains 50 predefined markers. The default value for **ARUCO_MARKER_ID** is `0`. You can change the value depending on the marker set you choose. For current default from `0` to `49`. The optimal value for **ARUCO_MARKER_SIZE** should be between `50` and `200`. Markers that are too small are harder to recognize.
 
