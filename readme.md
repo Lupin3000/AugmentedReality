@@ -8,10 +8,10 @@ This repository is intended to help you get started with the topic of **Python: 
 
 ## Minimum requirements
 
-- Python 3.7.x installed
-- USB camera
+- Python 3.7.x installed (_tested with Python 3.7.3 on UNIHIKER and 3.12 on macOS_)
+- USB or Laptop camera
 
-## Project structure
+## Project setup
 
 ```shell
 # clone the project to local
@@ -20,6 +20,8 @@ $ git clone https://github.com/Lupin3000/AugmentedReality.git
 # change into cloned directory
 $ cd AugmentedReality/
 ```
+
+## Project structure
 
 The final folders and file structure of the project (_if no calibration has yet been carried out and no markers have been generated_).
 
