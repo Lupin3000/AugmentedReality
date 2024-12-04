@@ -142,7 +142,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 > 
 > Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in `ar_images.py` and `ar_videos.py` if necessary.
 > 
-> If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in `ar_marker_ids.py`, too.
+> If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in `ar_marker_ids.py`, `ar_images.py` and `ar_videos.py` too.
 
 _**Note:** To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0` and `1`._
 

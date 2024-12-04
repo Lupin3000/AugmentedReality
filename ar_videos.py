@@ -4,6 +4,7 @@ import numpy as np
 
 
 MARKER_SIZE: float = 0.035
+ARUCO_DICT_ID: int = cv2.aruco.DICT_4X4_50
 OBJ_POINTS: np.ndarray = np.array([
         [0, 0, 0],
         [MARKER_SIZE, 0, 0],
@@ -41,7 +42,7 @@ def aruco_detector() -> cv2.aruco.ArucoDetector:
     :return: A configured ArUcoDetector instance ready to detect markers.
     :rtype: cv2.aruco.ArucoDetector
     """
-    aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
+    aruco_dict = cv2.aruco.getPredefinedDictionary(ARUCO_DICT_ID)
     aruco_params = cv2.aruco.DetectorParameters()
 
     return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
