@@ -140,6 +140,8 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE**.
 > 
 > Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in `ar_images.py` and `ar_videos.py` if necessary.
+> 
+> If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in `ar_marker_ids.py`, too.
 
 ## Run examples
 
