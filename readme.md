@@ -98,7 +98,7 @@ Every camera has certain optical distortions, and it is sometimes difficult to g
 
 Calibration is typically done with a checkerboard pattern, which you can find in PNG format [here](dev/img/pattern.png) in the project.
 
-> If you do not perform the calibrations, an imaginary value will be used in the AR examples.
+> If you do not perform the calibrations, an imaginary value will be used in the AR examples (_`ar_images.py` and `ar_videos.py`_).
 
 **Calibration process**
 
