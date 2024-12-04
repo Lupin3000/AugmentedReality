@@ -15,7 +15,7 @@ This repository is intended to help you get started with the topic of **Python: 
 
 ```shell
 # clone the project to local
-$ git clone https://github.com/Lupin3000/AugmentedReality
+$ git clone https://github.com/Lupin3000/AugmentedReality.git
 
 # change into cloned directory
 $ cd AugmentedReality/
