@@ -58,7 +58,7 @@ In the `src/` folder you will find two images `src/photos/` and two videos `src/
 
 In the `dev/img/` subfolder you will find the file `pattern.png`. This pattern is needed to be printed out for camera calibration.
 
-When you create new markers using the Python script `dev/generate_marker.py`, they are saved to a new subfolder within the `dev/markers/` folder.
+When you create new markers using the Python script `dev/generate_marker.py`, they markers are saved as *.jpg into the new subfolder within the `dev/markers/`.
 
 If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
 
