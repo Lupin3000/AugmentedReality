@@ -4,7 +4,7 @@ import numpy as np
 
 
 PATTERN: tuple = (9, 6)
-SQUARE_SITE: float = 0.024
+SQUARE_SIZE: float = 0.024
 
 
 if __name__ == "__main__":
@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     objp = np.zeros((np.prod(PATTERN), 3), dtype=np.float32)
     objp[:, :2] = np.indices(PATTERN).T.reshape(-1, 2)
-    objp *= SQUARE_SITE
+    objp *= SQUARE_SIZE
 
     cap = cv2.VideoCapture(0)
     print("[INFO] Press 's' to save the camera calibration parameters.")
