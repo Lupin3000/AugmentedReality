@@ -52,7 +52,7 @@ $ tree .
 
 The `root` folder of the project contains the files: `requirements.txt`, `ar_marker_id.py`, `ar_images.py` and `ar_videos.py`. Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for Augmented Reality (AR).
 
-The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation. In the `src` folder you will find images and videos that are used for the AR examples.
+The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation. In the `src/` folder you will find images and videos that are used for the AR examples.
 
 In the `dev/img/` subfolder you will find the file `pattern.png`. This is needed to be printed out for camera calibration.
 
@@ -105,7 +105,7 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 5. If you see artificial colored lines on the screen, press the **s-key** to perform the calibration and save the values.
 6. To end the calibration proces and to stop the Python script, press the **q-key**.
 
-> Each time you press the s-key, the calibration is carried out again and the values are overwritten in the file `src/camera_params.npz`. 
+> Each time you press the s-key, the calibration is carried out again and the values are overwritten in the file `src/camera_params.npz` (_if file exist_). 
 > 
 > To display the values at any time later, you can create the Python script `dev/show_calibration.py`.
 
