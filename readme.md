@@ -59,7 +59,7 @@ When you create new markers using the Python script `dev/generate_marker.py`, th
 If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
 
 ## Prepare a local development environment
-Various Python modules/libraries are used in this project. It is therefore recommended to use Python Virtual Environment. The necessary modules/libraries are listed in the requirements.txt file.
+Various Python modules/libraries are used in this project. It is therefore recommended to use Python Virtual Environment. The necessary modules/libraries are listed in the `requirements.txt` file.
 
 The next commands show how the virtual environment is created and the installation is carried out.
 
@@ -97,7 +97,7 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 **Calibration process**
 
 1. Print out the `dev/img/pattern.png` file on A4 paper and glue the printed paper onto cardboard (_for stabilization_).
-2. After printing, measure the length or width of a single cube! Depending on the printer, this can vary slightly. Then convert the value into the unit of measurement meters (_for example: 2.4cm is 0.024m_). Enter the value for the constant **SQUARE_SITE** in the Python script `dev/get_calibration.py`.
+2. After printing, measure the length or width of a single cube! Depending on the printer, this can vary slightly. Then convert the value into the unit of measurement meters (_for example: 2.4cm is 0.024m_). Enter the value for the constant **SQUARE_SIZE** in the Python script `dev/get_calibration.py`.
 3. Provide good lighting for the area. Avoid strong shadows between the printed pattern and the camera. Also, avoid any light reflections on camera. 
 4. Start the Python script `dev/get_calibration.py` and hold the pattern in front of the camera so that it is completely visible.
 5. If you see artificial colored lines on the screen, press the **s-key** to perform the calibration and save the values.
@@ -137,9 +137,9 @@ To generate a marker, simply run the script `dev/generate_marker.py`.
 
 Print out the marker(s) on paper, cut them and glue the printed paper onto cardboard (_for stabilization_).
 
-> In the examples you still have to specify the length or height of the markers in meters in the constant: **MARKER_SIZE**.
+> In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE**.
 > 
-> So measure one of the created markers and change the value in `ar_images.py` and `ar_videos.py` if necessary.
+> Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in `ar_images.py` and `ar_videos.py` if necessary.
 
 ## Run examples
 
@@ -157,3 +157,5 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 # run marker video replacement
 (.venv) $ python3 ar_videos.py
 ```
+
+To close the window and to stop the Python script, press the **q-key**.
