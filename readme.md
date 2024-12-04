@@ -163,3 +163,9 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 ```
 
 To close the window and to stop the Python script, press the **q-key**.
+
+## Note
+
+- Example images are generated with [perchance.org](https://perchance.org/ai-text-to-image-generator)
+- Example videos downloaded from [pixabay.com](https://pixabay.com/)
+- Example pattern downloaded from [github.com](https://github.com/opencv/opencv/blob/4.x/doc/pattern.png)
