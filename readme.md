@@ -15,10 +15,10 @@ This repository is intended to help you get started with the topic of **Python: 
 
 ```shell
 # clone the project to local
-$ git clone [...]
+$ git clone https://github.com/Lupin3000/AugmentedReality
 
 # change into cloned directory
-$ cd [...]
+$ cd AugmentedReality/
 ```
 
 The final folders and file structure of the project (_if no calibration has yet been carried out and no markers have been generated_).
