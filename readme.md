@@ -102,12 +102,12 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 2. After printing, measure the length or width of a single cube! Depending on the printer, this can vary slightly. Then convert the value into the unit of measurement meters (_for example: 2.4cm is 0.024m_). Enter the value for the constant **SQUARE_SIZE** in the Python script `dev/get_calibration.py`.
 3. Provide good lighting for the area. Avoid strong shadows between the printed pattern and the camera. Also, avoid any light reflections on camera. 
 4. Start the Python script `dev/get_calibration.py` and hold the pattern in front of the camera so that it is completely visible.
-5. If you see artificial colored lines on the screen, press the **s-key** to perform the calibration and save the values.
+5. If you see artificial colored lines on the screen, press the **s-key** to perform the calibration and save the values (_do not move the pattern for few seconds_).
 6. To end the calibration proces and to stop the Python script, press the **q-key**.
 
 > Each time you press the s-key, the calibration is carried out again and the values are overwritten in the file `src/camera_params.npz` (_if file exist_). 
 > 
-> To display the values at any time later, you can create the Python script `dev/show_calibration.py`.
+> To display the values at any time later, you can execute the Python script `dev/show_calibration.py`.
 
 ```shell
 # run camera calibration
