@@ -32,14 +32,14 @@ The final folders and file structure of the project (_if no calibration has yet 
 $ tree .
 |____.gitignore
 |____requirements.txt
-|____ar_videos.py
 |____ar_marker_ids.py
 |____ar_images.py
+|____ar_videos.py
 |____dev
-| |____show_calbraion.py
 | |____img
 | | |____pattern.png
 | |____get_calibration.py
+| |____show_calbraion.py
 | |____generate_marker.py
 |____src
 | |____videos
