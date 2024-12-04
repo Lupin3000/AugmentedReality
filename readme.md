@@ -1,6 +1,8 @@
 # Python: Augmented Reality
 
-This repository is intended to help you get started with the topic of **Python: Augmented Reality**. Following topics are explained and have examples:
+This repository is intended to introduce the topic of **Python: Augmented Reality**.
+
+Following details are explained and have examples:
 
 - Camera calibration
 - ArUco marker generation
