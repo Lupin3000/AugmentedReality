@@ -11,7 +11,7 @@ OBJ_POINTS: np.ndarray = np.array([
         [MARKER_SIZE, MARKER_SIZE, 0],
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
-FILE_PATH: str = "src/camera_params.npz"
+FILE_PARAMS_PATH: str = "src/camera_params.npz"
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -26,7 +26,7 @@ def camera_calibration(current_path: str) -> tuple:
     :return: A tuple containing the camera matrix and distortion coefficients.
     :rtype: tuple
     """
-    param_file = join(current_path, FILE_PATH)
+    param_file = join(current_path, FILE_PARAMS_PATH)
 
     if exists(param_file):
         params = np.load(param_file)
@@ -110,15 +110,12 @@ def draw_image_between_markers(img: np.ndarray,
 
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
-    image_path = join(current_file_path, "src/photos/monk_big.png")
-    if not exists(image_path):
-        raise FileNotFoundError(f"[Error] Overlay image not found at: {image_path}")
-    image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
 
     matrix, coefficients = camera_calibration(current_path=current_file_path)
     detector = aruco_detector()
 
     cap = cv2.VideoCapture(0)
+    image_cache = {}
     print("[INFO] Press 'q' to quit.")
 
     while True:
@@ -135,10 +132,21 @@ if __name__ == "__main__":
                 idx1 = marker_indices[0]
                 idx2 = marker_indices[1]
 
+                marker_id = int(idx1 + idx2)
+                img_path = join(current_file_path, f"src/photos/treasure_{marker_id}.jpg")
+                if not exists(img_path):
+                    continue
+
+                if marker_id not in image_cache:
+                    print(f"[INFO] Loading image: {img_path}")
+                    image_cache[marker_id] = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+
+                image_capture = image_cache[marker_id]
+
                 corners1 = corners[idx1][0]
                 corners2 = corners[idx2][0]
 
-                frame = draw_image_between_markers(frame, corners1, corners2, image)
+                frame = draw_image_between_markers(frame, corners1, corners2, image_capture)
 
         cv2.imshow("AR Multi-Marker Detection", frame)
 

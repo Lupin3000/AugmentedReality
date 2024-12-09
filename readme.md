@@ -49,7 +49,8 @@ $ tree .
 | |____photos
 | | |____monk_0.jpg
 | | |____monk_1.jpg
-| | |____monk_big.jpg
+| | |____treasure_1.jpg
+| | |____treasure_2.jpg
 ```
 
 **Project description**

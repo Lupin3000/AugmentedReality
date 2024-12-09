@@ -11,7 +11,7 @@ OBJ_POINTS: np.ndarray = np.array([
         [MARKER_SIZE, MARKER_SIZE, 0],
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
-FILE_PATH: str = "src/camera_params.npz"
+FILE_PARAMS_PATH: str = "src/camera_params.npz"
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -26,7 +26,7 @@ def camera_calibration(current_path: str) -> tuple:
     :return: A tuple containing the camera matrix and distortion coefficients.
     :rtype: tuple
     """
-    param_file = join(current_path, FILE_PATH)
+    param_file = join(current_path, FILE_PARAMS_PATH)
 
     if exists(param_file):
         params = np.load(param_file)
