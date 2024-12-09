@@ -44,11 +44,12 @@ $ tree .
 | |____generate_marker.py
 |____src
 | |____videos
-| | |____video_1.mp4
 | | |____video_0.mp4
+| | |____video_1.mp4
 | |____photos
-| | |____monk_1.jpg
 | | |____monk_0.jpg
+| | |____monk_1.jpg
+| | |____monk_big.jpg
 ```
 
 **Project description**

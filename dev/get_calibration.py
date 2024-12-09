@@ -5,6 +5,7 @@ import numpy as np
 
 PATTERN: tuple = (9, 6)
 SQUARE_SIZE: float = 0.024
+FILE_PATH: str = "../src/camera_params.npz"
 
 
 if __name__ == "__main__":
@@ -44,7 +45,7 @@ if __name__ == "__main__":
                                                                    gray.shape[::-1],
                                                                    None,
                                                                    None)
-                np.savez(join(current_file_path, "../src/camera_params.npz"),
+                np.savez(join(current_file_path, FILE_PATH),
                          camera_matrix=matrix.astype(int),
                          dist_coefficients=np.round(coefficient, 2))
 
