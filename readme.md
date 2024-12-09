@@ -32,9 +32,10 @@ The final folders and file structure of the project (_if no calibration has yet 
 $ tree .
 |____.gitignore
 |____requirements.txt
-|____ar_marker_ids.py
-|____ar_images.py
-|____ar_videos.py
+|____example_0.py
+|____example_1.py
+|____example_2.py
+|____example_3.py
 |____dev
 | |____img
 | | |____pattern.png
@@ -50,19 +51,20 @@ $ tree .
 | | |____monk_0.jpg
 ```
 
-**Description**
+**Project description**
 
-- The `root` folder of the project contains the files: `requirements.txt`, `ar_marker_id.py`, `ar_images.py` and `ar_videos.py`. Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for Augmented Reality (AR).
+- The `root` folder of the project contains the files: `.gitignore`, `requirements.txt`, `example_0.py`, `example_1.py`, `example_2.py` and `example_3.py`.
+- Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for Augmented Reality (AR).
 - The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation.
-- In the `src/` folder you will find two images `src/photos/` and two videos `src/videos/` that are used for the AR examples (_`ar_images.py` and `ar_videos.py`_).
+- In the `src/` folder you will find two images `src/photos/` and two videos `src/videos/` that are used for the AR examples.
 - In the `dev/img/` subfolder you will find the file `pattern.png`. This pattern is needed to be printed out for camera calibration.
 - When you create new markers using the Python script `dev/generate_marker.py`, the markers are saved as *.jpg into the new subfolder within the `dev/markers/`.
 - If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
 
 ## Prepare a local development environment
-Various Python modules/libraries are used in this project. It is therefore recommended to use Python Virtual Environment. The necessary modules/libraries are listed in the `requirements.txt` file.
+Various Python modules/libraries are used in this project. It is therefore recommended to use Python virtual environment. The necessary modules/libraries are listed in the `requirements.txt` file.
 
-The next commands show how the virtual environment is created and the installation is carried out.
+The next commands show how the Python virtual environment is created and the installation of required modules/libraries is carried out.
 
 ```shell
 # create virtual environment
@@ -93,7 +95,7 @@ Every camera has certain optical distortions, and it is sometimes difficult to g
 
 Calibration is typically done with a checkerboard pattern, which you can find in PNG format [here](dev/img/pattern.png) in the project.
 
-> If you do not perform the calibrations, an imaginary value will be used in the AR examples (_`ar_images.py` and `ar_videos.py`_).
+> If you do not perform the calibrations, an imaginary value will be used in the AR examples.
 
 **Calibration process**
 
@@ -140,27 +142,31 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 
-> Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in `ar_images.py` and `ar_videos.py` if necessary.
+> Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in all example files.
 > 
-> If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in `ar_marker_ids.py`, `ar_images.py` and `ar_videos.py` too.
+> If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in all example files too.
 
 _**Note:** To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0` and `1`._
 
 ## Run examples
 
-- The file `ar_marker_ids.py` shows all detected markers and the respective ID.
-- The file `ar_images.py` shows scaled pictures on marker position.
-- The file `ar_videos.py` shows scaled video loops on marker position.
+- The file `example_0.py` shows for each detected marker the respective ID.
+- The file `example_1.py` shows scaled pictures on each marker position.
+- The file `example_2.py` shows scaled video loops on each marker position.
+- The file `example_3.py` shows scaled pictures on two marker positions.
 
 ```shell
-# run marker id detection
-(.venv) $ python3 ar_marker_ids.py
+# show info overlay on each marker
+(.venv) $ python3 example_0.py
 
-# run marker image replacement
-(.venv) $ python3 ar_images.py
+# show image overlay on each marker
+(.venv) $ python3 example_1.py
 
-# run marker video replacement
-(.venv) $ python3 ar_videos.py
+# show video overlay on each marker
+(.venv) $ python3 example_2.py
+
+# show image overlay by two markers
+(.venv) $ python3 example_3.py
 ```
 
 To close the window and to stop the Python script, press the **q-key**.
