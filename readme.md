@@ -71,7 +71,7 @@ Various Python modules/libraries are used in this project. It is therefore recom
 
 The next commands show how the Python virtual environment is created and the installation of required modules/libraries is carried out.
 
-**Create virtualenv and install packages/modules:**
+**Create virtualenv and install packages/modules (_commands_):**
 
 ```shell
 # create virtual environment
@@ -117,7 +117,7 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 > 
 > To display the values at any time later, you can execute the Python script `dev/show_calibration.py`.
 
-**Store camera params and show them:**
+**Store camera params and show params (_commands_):**
 
 ```shell
 # run camera calibration
@@ -129,9 +129,9 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 
 ## Generate ArUco markers
 
-You can create your own ArUco markers with the Python script `dev/generate_marker.py`. To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0` and `1`.
+With the Python script `dev/generate_marker.py`, you can create your own ArUco markers. To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0` and `1`.
 
-> You can adapt the constants **ARUCO_DICT_ID** as well as **ARUCO_MARKER_ID** and **ARUCO_MARKER_SIZE** to your needs.
+> Important are constants **ARUCO_DICT_ID** as well as **ARUCO_MARKER_ID** and **ARUCO_MARKER_SIZE**.
 >
 > **ARUCO_DICT_ID** select the ArUco Marker Set (_eq. DICT_4X4_100, DICT_6X6_50 or DICT_7X7_1000_).
 >
@@ -141,7 +141,7 @@ You can create your own ArUco markers with the Python script `dev/generate_marke
 
 The default of **ARUCO_DICT_ID** set is: `DICT_4X4_50`, which contains 50 predefined markers. The constant default value for **ARUCO_MARKER_ID** is `0`. For current **ARUCO_DICT_ID** the marker id's can be from `0` to `49`. The optimal value for **ARUCO_MARKER_SIZE** should be between `50` and `250`. Markers that are too small are harder to recognize.
 
-**Generate markers:**
+**Generate markers (_commands_):**
 
 ```shell
 # run marker generation for id 0
@@ -170,7 +170,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 > 
 > If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in all example files too.
 
-**Execute examples:**
+**Execute examples (_commands_):**
 
 ```shell
 # show info overlay on each marker
