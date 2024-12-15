@@ -124,19 +124,24 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 
 ## Generate ArUco markers
 
-You can create your own ArUco markers with the Python script `dev/generate_marker.py`. However, you must first adapt the constants **ARUCO_DICT_ID** as well as **ARUCO_MARKER_ID** and **ARUCO_MARKER_SIZE** to your needs.
+You can create your own ArUco markers with the Python script `dev/generate_marker.py`.
 
-- The respective ArUco Markers is set in the constant: **ARUCO_DICT_ID**.
-- The respective ArUco Marker ID is set in the constant: **ARUCO_MARKER_ID**
-- The size of ArUco Markers is set in the constant: **ARUCO_MARKER_SIZE**
+> You can adapt the constants **ARUCO_DICT_ID** as well as **ARUCO_MARKER_ID** and **ARUCO_MARKER_SIZE** to your needs.
+>
+> **ARUCO_DICT_ID** select the ArUco marker set (_eq. DICT_4X4_100, DICT_6X6_50 or DICT_7X7_1000_).
+> **ARUCO_MARKER_ID** select the ArUco marker id (_depends to ArUco Marker Set_).
+> **ARUCO_MARKER_SIZE** set the size (_in pixels_) of ArUco markers.
 
-For example, the default of **ARUCO_DICT_ID** set is: `DICT_4X4_50`, which contains 50 predefined markers. The constant default value for **ARUCO_MARKER_ID** is `0`. You can change the value depending on the marker that you choose to generate. For current default value **ARUCO_DICT_ID** from `0` to `49`. The optimal value for **ARUCO_MARKER_SIZE** should be between `50` and `200`. Markers that are too small are harder to recognize.
+The default of **ARUCO_DICT_ID** set is: `DICT_4X4_50`, which contains 50 predefined markers. The constant default value for **ARUCO_MARKER_ID** is `0`. For current default value **ARUCO_DICT_ID** from `0` to `49`. The optimal value for **ARUCO_MARKER_SIZE** should be between `50` and `200`. Markers that are too small are harder to recognize.
 
 To generate a marker, simply run the script `dev/generate_marker.py`.
 
 ```shell
-# run marker generation
-(.venv) $ python3 dev/generate_marker.py
+# run marker generation for id 0
+(.venv) $ python3 dev/generate_marker.py --id 0 --size 100
+
+# run marker generation for id 1
+(.venv) $ python3 dev/generate_marker.py --id 1 --size 100
 
 # show created markers (optional)
 (.venv) $ ls -la dev/markers/
