@@ -157,7 +157,7 @@ _**Note:** To follow the examples, you should print out markers with **ARUCO_MAR
 - `example_1.py` shows scaled pictures on each marker position.
 - `example_2.py` shows scaled video loops on each marker position.
 - `example_3.py` shows scaled pictures on two marker positions.
-- `example_4.py` shows shows a line two marker positions.
+- `example_4.py` shows a line and distance (_pixels, cm_) between two markers.
 
 ```shell
 # show info overlay on each marker
