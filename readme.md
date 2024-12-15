@@ -66,9 +66,12 @@ $ tree .
 - If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
 
 ## Prepare a local development environment
+
 Various Python modules/libraries are used in this project. It is therefore recommended to use Python virtual environment. The necessary modules/libraries are listed in the `requirements.txt` file.
 
 The next commands show how the Python virtual environment is created and the installation of required modules/libraries is carried out.
+
+**Create virtualenv and install packages/modules:**
 
 ```shell
 # create virtual environment
@@ -114,6 +117,8 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 > 
 > To display the values at any time later, you can execute the Python script `dev/show_calibration.py`.
 
+**Store camera params and show them:**
+
 ```shell
 # run camera calibration
 (.venv) $ python3 dev/get_calibration.py
@@ -124,7 +129,7 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 
 ## Generate ArUco markers
 
-You can create your own ArUco markers with the Python script `dev/generate_marker.py`.
+You can create your own ArUco markers with the Python script `dev/generate_marker.py`. To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0` and `1`.
 
 > You can adapt the constants **ARUCO_DICT_ID** as well as **ARUCO_MARKER_ID** and **ARUCO_MARKER_SIZE** to your needs.
 >
@@ -136,7 +141,7 @@ You can create your own ArUco markers with the Python script `dev/generate_marke
 
 The default of **ARUCO_DICT_ID** set is: `DICT_4X4_50`, which contains 50 predefined markers. The constant default value for **ARUCO_MARKER_ID** is `0`. For current **ARUCO_DICT_ID** the marker id's can be from `0` to `49`. The optimal value for **ARUCO_MARKER_SIZE** should be between `50` and `250`. Markers that are too small are harder to recognize.
 
-To generate a marker, simply run the script `dev/generate_marker.py`.
+**Generate markers:**
 
 ```shell
 # run marker generation for id 0
@@ -151,14 +156,6 @@ To generate a marker, simply run the script `dev/generate_marker.py`.
 
 Print out the marker(s) on paper, cut them and glue the printed paper onto cardboard (_for stabilization_).
 
-> In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
-> 
-> Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in all example files.
-> 
-> If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in all example files too.
-
-_**Note:** To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0` and `1`._
-
 ## Run examples
 
 - `example_0.py` shows for each detected marker the respective ID.
@@ -166,6 +163,14 @@ _**Note:** To follow the examples, you should print out markers with **ARUCO_MAR
 - `example_2.py` shows scaled video loops on each marker position.
 - `example_3.py` shows scaled pictures on two marker positions.
 - `example_4.py` shows a line and distance (_pixels, cm_) between two markers.
+
+> In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
+> 
+> Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in all example files.
+> 
+> If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in all example files too.
+
+**Execute examples:**
 
 ```shell
 # show info overlay on each marker
