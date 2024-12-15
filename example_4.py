@@ -84,6 +84,7 @@ if __name__ == "__main__":
                 pt1 = tuple(map(int, centers[0]))
                 pt2 = tuple(map(int, centers[1]))
                 midpoint = ((pt1[0] + pt2[0]) // 2, (pt1[1] + pt2[1]) // 2)
+
                 distance_pixels = np.linalg.norm(np.array(pt1) - np.array(pt2))
                 message = f"Distance: {distance_pixels:.2f} px"
 
@@ -93,10 +94,11 @@ if __name__ == "__main__":
                 ret_2, _, vec_2 = cv2.solvePnP(OBJ_POINTS, corners[1], matrix, coefficients)
 
                 if ret_1 and ret_2:
+                    midpoint_below = (midpoint[0], midpoint[1] + 20)
+
                     distance_meters = np.linalg.norm(vec_1 - vec_2)
                     distance_cm = distance_meters * 100
 
-                    midpoint_below = (midpoint[0], midpoint[1] + 20)
                     message = f"Distance: {distance_cm:.2f} cm"
                     cv2.putText(frame, message, midpoint_below, cv2.FONT_HERSHEY_SIMPLEX, 0.5, INFO_COLOR_B, 2)
 
