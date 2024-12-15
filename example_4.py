@@ -31,9 +31,11 @@ def camera_calibration(current_path: str) -> tuple:
     param_file = join(current_path, FILE_PARAMS_PATH)
 
     if exists(param_file):
+        print(f"[INFO] Loading camera parameters from: {param_file}")
         params = np.load(param_file)
         return params["camera_matrix"].astype(np.float32), params["dist_coefficients"].astype(np.float32)
     else:
+        print("[INFO] Camera parameters file not found. Using default values.")
         return np.array([[800, 0, 320], [0, 800, 240], [0, 0, 1]], dtype=np.float32), np.zeros(5)
 
 

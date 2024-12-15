@@ -29,9 +29,11 @@ def camera_calibration(current_path: str) -> tuple:
     param_file = join(current_path, FILE_PARAMS_PATH)
 
     if exists(param_file):
+        print(f"[INFO] Loading camera parameters from: {param_file}")
         params = np.load(param_file)
         return params["camera_matrix"].astype(np.float32), params["dist_coefficients"].astype(np.float32)
     else:
+        print("[INFO] Camera parameters file not found. Using default values.")
         return np.array([[800, 0, 320], [0, 800, 240], [0, 0, 1]], dtype=np.float32), np.zeros(5)
 
 
@@ -117,7 +119,9 @@ if __name__ == "__main__":
             for i in range(len(ids)):
                 marker_id = ids[i][0]
                 img_path = join(current_file_path, f"src/photos/monk_{marker_id}.jpg")
+
                 if not exists(img_path):
+                    print(f"[ERROR] Image not found: {img_path}")
                     continue
 
                 if marker_id not in image_cache:

@@ -29,9 +29,11 @@ def camera_calibration(current_path: str) -> tuple:
     param_file = join(current_path, FILE_PARAMS_PATH)
 
     if exists(param_file):
+        print(f"[INFO] Loading camera parameters from: {param_file}")
         params = np.load(param_file)
         return params["camera_matrix"].astype(np.float32), params["dist_coefficients"].astype(np.float32)
     else:
+        print("[INFO] Camera parameters file not found. Using default values.")
         return np.array([[800, 0, 320], [0, 800, 240], [0, 0, 1]], dtype=np.float32), np.zeros(5)
 
 
@@ -128,13 +130,16 @@ if __name__ == "__main__":
 
         if ids is not None and len(ids) >= 2:
             marker_indices = {mid[0]: idx for idx, mid in enumerate(ids)}
+
             if 0 in marker_indices and 1 in marker_indices:
                 idx1 = marker_indices[0]
                 idx2 = marker_indices[1]
 
                 marker_id = int(idx1 + idx2)
                 img_path = join(current_file_path, f"src/photos/treasure_{marker_id}.jpg")
+
                 if not exists(img_path):
+                    print(f"[ERROR] Image not found: {img_path}")
                     continue
 
                 if marker_id not in image_cache:
@@ -148,7 +153,7 @@ if __name__ == "__main__":
 
                 frame = draw_image_between_markers(frame, corners1, corners2, image_capture)
 
-        cv2.imshow("AR Multi-Marker Detection", frame)
+        cv2.imshow("AR Multi-Marker Detection: with image", frame)
 
     cap.release()
     cv2.destroyAllWindows()
