@@ -1,6 +1,6 @@
 # Python: Augmented Reality
 
-This repository is intended to introduce the topic of **Python: Augmented Reality**.
+This repository is intended to introduce the topic of **Python: Augmented Reality** by ArUco marker detection.
 
 Following details are explained and have examples:
 
@@ -36,6 +36,7 @@ $ tree .
 |____example_1.py
 |____example_2.py
 |____example_3.py
+|____example_4.py
 |____dev
 | |____img
 | | |____pattern.png
@@ -55,8 +56,8 @@ $ tree .
 
 **Project description**
 
-- The `root` folder of the project contains the files: `.gitignore`, `requirements.txt`, `example_0.py`, `example_1.py`, `example_2.py` and `example_3.py`.
-- Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for Augmented Reality (AR).
+- The `root` folder of the project contains the files: `.gitignore`, `requirements.txt` and `example_*.py`.
+- Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for marker detection.
 - The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation.
 - In the `src/` folder you will find two images `src/photos/` and two videos `src/videos/` that are used for the AR examples.
 - In the `dev/img/` subfolder you will find the file `pattern.png`. This pattern is needed to be printed out for camera calibration.
@@ -152,10 +153,11 @@ _**Note:** To follow the examples, you should print out markers with **ARUCO_MAR
 
 ## Run examples
 
-- The file `example_0.py` shows for each detected marker the respective ID.
-- The file `example_1.py` shows scaled pictures on each marker position.
-- The file `example_2.py` shows scaled video loops on each marker position.
-- The file `example_3.py` shows scaled pictures on two marker positions.
+- `example_0.py` shows for each detected marker the respective ID.
+- `example_1.py` shows scaled pictures on each marker position.
+- `example_2.py` shows scaled video loops on each marker position.
+- `example_3.py` shows scaled pictures on two marker positions.
+- `example_4.py` shows shows a line two marker positions.
 
 ```shell
 # show info overlay on each marker
@@ -167,8 +169,11 @@ _**Note:** To follow the examples, you should print out markers with **ARUCO_MAR
 # show video overlay on each marker
 (.venv) $ python3 example_2.py
 
-# show image overlay by two markers
+# show image overlay between two markers
 (.venv) $ python3 example_3.py
+
+# show line overlay between two markers
+(.venv) $ python3 example_4.py
 ```
 
 To close the window and to stop the Python script, press the **q-key**.
