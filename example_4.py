@@ -12,7 +12,7 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
-LINE_COLOR: tuple = (50, 50, 50)
+LINE_COLOR: tuple = (150, 150, 150)
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -79,6 +79,14 @@ if __name__ == "__main__":
                     centers.append(center)
 
                 cv2.line(frame, tuple(map(int, centers[0])), tuple(map(int, centers[1])),LINE_COLOR, 2)
+
+                pt1 = tuple(map(int, centers[0]))
+                pt2 = tuple(map(int, centers[1]))
+                midpoint = ((pt1[0] + pt2[0]) // 2, (pt1[1] + pt2[1]) // 2)
+
+                distance_pixels = np.linalg.norm(np.array(pt1) - np.array(pt2))
+                message = f"Distance: {distance_pixels:.2f} px"
+                cv2.putText(frame, message, midpoint, cv2.FONT_HERSHEY_SIMPLEX, 0.5, LINE_COLOR, 2)
 
         cv2.imshow("AR Marker ID Detection: Draw line", frame)
 
