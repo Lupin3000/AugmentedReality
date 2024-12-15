@@ -14,6 +14,7 @@ OBJ_POINTS: np.ndarray = np.array([
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
 INFO_COLOR_A: tuple = (150, 150, 150)
 INFO_COLOR_B: tuple = (150, 200, 200)
+LINE_HEIGHT: int = 20
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -96,7 +97,7 @@ if __name__ == "__main__":
                 ret_2, _, vec_2 = cv2.solvePnP(OBJ_POINTS, corners[1], matrix, coefficients)
 
                 if ret_1 and ret_2:
-                    midpoint_below = (midpoint[0], midpoint[1] + 20)
+                    midpoint_below = (midpoint[0], midpoint[1] + LINE_HEIGHT)
 
                     distance_meters = np.linalg.norm(vec_1 - vec_2)
                     distance_cm = distance_meters * 100
