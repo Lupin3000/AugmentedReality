@@ -7,6 +7,7 @@ Following details are explained and have examples:
 - Camera calibration
 - ArUco marker generation
 - ArUco marker detection
+- ArUco marker pose estimation
 
 ## Minimum requirements
 
