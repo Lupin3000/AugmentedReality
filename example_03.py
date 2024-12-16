@@ -71,26 +71,25 @@ if __name__ == "__main__":
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         corners, ids, rejected = detector.detectMarkers(gray)
 
-        if ids is not None:
-            if len(ids) > 1:
-                marker_centers = []
+        if ids is not None and len(ids) > 1:
+            marker_centers = []
 
-                for corner_group in corners:
-                    top_left = corner_group[0][0]
-                    bottom_right = corner_group[0][2]
-                    center_x = int((top_left[0] + bottom_right[0]) / 2)
-                    center_y = int((top_left[1] + bottom_right[1]) / 2)
-                    marker_centers.append((center_x, center_y))
+            for corner_group in corners:
+                top_left = corner_group[0][0]
+                bottom_right = corner_group[0][2]
+                center_x = int((top_left[0] + bottom_right[0]) / 2)
+                center_y = int((top_left[1] + bottom_right[1]) / 2)
+                marker_centers.append((center_x, center_y))
 
-                for i, (center_x, center_y) in enumerate(marker_centers):
-                    for j, (other_x, other_y) in enumerate(marker_centers):
-                        if i != j:
-                            cv2.arrowedLine(img=frame,
-                                            pt1=(center_x, center_y),
-                                            pt2=(other_x, other_y),
-                                            color=ARROW_COLOR,
-                                            thickness=ARROW_THICKNESS,
-                                            line_type=cv2.LINE_AA)
+            for i, (center_x, center_y) in enumerate(marker_centers):
+                for j, (other_x, other_y) in enumerate(marker_centers):
+                    if i != j:
+                        cv2.arrowedLine(img=frame,
+                                        pt1=(center_x, center_y),
+                                        pt2=(other_x, other_y),
+                                        color=ARROW_COLOR,
+                                        thickness=ARROW_THICKNESS,
+                                        line_type=cv2.LINE_AA)
 
         cv2.imshow("AR Marker ID Detection: show arrows", frame)
 
