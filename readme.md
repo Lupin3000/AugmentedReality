@@ -163,7 +163,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 - `example_02.py` shows for each detected marker a letter from alphabet.
 - `example_03.py` shows the distance between two markers (_pixels, cm_).
 - `example_05.py` shows a scaled picture on each marker.
-- `example_06.py` shows a scaled video on each marker.
+- `example_06.py` shows a scaled video loop on each marker.
 - `example_07.py` shows a scaled picture between two markers.
 
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
