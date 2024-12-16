@@ -130,30 +130,24 @@ if __name__ == "__main__":
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         corners, ids, _ = detector.detectMarkers(gray)
 
-        if ids is not None and len(ids) >= 2:
-            marker_indices = {mid[0]: idx for idx, mid in enumerate(ids)}
+        if ids is not None and len(ids) > 1:
+            marker_id = int(ids[0][0] + ids[1][0])
+            img_path = join(example_path, f"treasure_{marker_id}.jpg")
 
-            if 0 in marker_indices and 1 in marker_indices:
-                idx1 = marker_indices[0]
-                idx2 = marker_indices[1]
+            if not exists(img_path):
+                print(f"[ERROR] Image not found: {img_path}")
+                continue
 
-                marker_id = int(idx1 + idx2)
-                img_path = join(example_path, f"treasure_{marker_id}.jpg")
+            if marker_id not in image_cache:
+                print(f"[INFO] Loading image: {img_path}")
+                image_cache[marker_id] = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
 
-                if not exists(img_path):
-                    print(f"[ERROR] Image not found: {img_path}")
-                    continue
+            image_capture = image_cache[marker_id]
 
-                if marker_id not in image_cache:
-                    print(f"[INFO] Loading image: {img_path}")
-                    image_cache[marker_id] = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+            corners_2 = corners[0][0]
+            corners_1 = corners[1][0]
 
-                image_capture = image_cache[marker_id]
-
-                corners1 = corners[idx1][0]
-                corners2 = corners[idx2][0]
-
-                frame = draw_image_between_markers(frame, corners1, corners2, image_capture)
+            frame = draw_image_between_markers(frame, corners_1, corners_2, image_capture)
 
         cv2.imshow("AR Multi-Marker Detection: show image", frame)
 
