@@ -12,9 +12,8 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
-INFO_COLOR_A: tuple = (150, 150, 150)
-INFO_COLOR_B: tuple = (150, 200, 200)
-LINE_HEIGHT: int = 20
+ARROW_COLOR: tuple = (0, 255, 0)
+ARROW_THICKNESS: int = 5
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -74,37 +73,26 @@ if __name__ == "__main__":
 
         if ids is not None:
             if len(ids) > 1:
-                centers = []
-                for i in range(len(corners)):
-                    c = corners[i][0]
-                    center = c.mean(axis=0)
-                    centers.append(center)
+                marker_centers = []
 
-                cv2.line(frame, tuple(map(int, centers[0])), tuple(map(int, centers[1])), INFO_COLOR_A, 2)
+                for corner_group in corners:
+                    top_left = corner_group[0][0]
+                    bottom_right = corner_group[0][2]
+                    center_x = int((top_left[0] + bottom_right[0]) / 2)
+                    center_y = int((top_left[1] + bottom_right[1]) / 2)
+                    marker_centers.append((center_x, center_y))
 
-                pt1 = tuple(map(int, centers[0]))
-                pt2 = tuple(map(int, centers[1]))
-                midpoint = ((pt1[0] + pt2[0]) // 2, (pt1[1] + pt2[1]) // 2)
+                for i, (center_x, center_y) in enumerate(marker_centers):
+                    for j, (other_x, other_y) in enumerate(marker_centers):
+                        if i != j:
+                            cv2.arrowedLine(img=frame,
+                                            pt1=(center_x, center_y),
+                                            pt2=(other_x, other_y),
+                                            color=ARROW_COLOR,
+                                            thickness=ARROW_THICKNESS,
+                                            line_type=cv2.LINE_AA)
 
-                distance_pixels = np.linalg.norm(np.array(pt1) - np.array(pt2))
-                message = f"Distance: {distance_pixels:.2f} px"
-
-                cv2.putText(frame, message, midpoint, cv2.FONT_HERSHEY_SIMPLEX, 0.5, INFO_COLOR_A, 2)
-
-                ret_1, _, vec_1 = cv2.solvePnP(OBJ_POINTS, corners[0], matrix, coefficients)
-                ret_2, _, vec_2 = cv2.solvePnP(OBJ_POINTS, corners[1], matrix, coefficients)
-
-                if ret_1 and ret_2:
-                    midpoint_below = (midpoint[0], midpoint[1] + LINE_HEIGHT)
-
-                    distance_meters = np.linalg.norm(vec_1 - vec_2)
-                    distance_cm = distance_meters * 100
-
-                    message = f"Distance: {distance_cm:.2f} cm"
-                    cv2.putText(frame, message, midpoint_below, cv2.FONT_HERSHEY_SIMPLEX, 0.5, INFO_COLOR_B, 2)
-
-
-        cv2.imshow("AR Marker ID Detection: show distance", frame)
+        cv2.imshow("AR Marker ID Detection: show arrows", frame)
 
     cap.release()
     cv2.destroyAllWindows()

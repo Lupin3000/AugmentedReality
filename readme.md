@@ -37,6 +37,7 @@ $ tree .
 |____example_01.py
 |____example_02.py
 |____example_03.py
+|____example_04.py
 |____example_05.py
 |____example_06.py
 |____example_07.py
@@ -162,7 +163,8 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 
 - `example_01.py` shows for each detected marker the respective ID.
 - `example_02.py` shows for each detected marker a letter from alphabet.
-- `example_03.py` shows the distance between two markers (_pixels, cm_).
+- `example_03.py` shows an arrow between markers centers.
+- `example_04.py` shows the distance between markers (_in pixels and cm_).
 - `example_05.py` shows a scaled picture on each marker.
 - `example_06.py` shows a scaled video loop on each marker.
 - `example_07.py` shows a scaled picture between two markers.
