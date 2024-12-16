@@ -12,7 +12,8 @@ Following details are explained and have examples:
 
 ## Minimum requirements
 
-- Python 3.7.x installed (_tested with Python 3.7.3 on UNIHIKER and 3.12 on macOS_)
+- tested with Python 3.7.3 on UNIHIKER (_Debian_)
+- tested with Python 3.12 on macOS
 - USB or Laptop camera
 
 ## Project setup
