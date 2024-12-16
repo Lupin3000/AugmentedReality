@@ -3,3 +3,4 @@
 .venv
 
 /src/camera_params.npz
+/dev/img/markers/

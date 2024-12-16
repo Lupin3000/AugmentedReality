@@ -8,6 +8,7 @@ Following details are explained and have examples:
 - ArUco marker generation
 - ArUco marker detection
 - ArUco marker pose estimation
+- Marker actions
 
 ## Minimum requirements
 
