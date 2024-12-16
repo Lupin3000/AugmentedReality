@@ -12,6 +12,7 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
+EXAMPLE_PATH: str = "src/videos/"
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -102,6 +103,7 @@ def draw_video_on_marker(img: np.ndarray,
 
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
+    example_path = join(current_file_path, EXAMPLE_PATH)
 
     matrix, coefficients = camera_calibration(current_path=current_file_path)
     detector = aruco_detector()
@@ -122,7 +124,7 @@ if __name__ == "__main__":
         if ids is not None:
             for i in range(len(ids)):
                 marker_id = ids[i][0]
-                video_path = join(current_file_path, f"src/videos/video_{marker_id}.mp4")
+                video_path = join(example_path, f"video_{marker_id}.mp4")
 
                 if not exists(video_path):
                     print(f"[ERROR] Video not found: {video_path}")

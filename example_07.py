@@ -12,6 +12,7 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
+EXAMPLE_PATH: str = "src/photos/"
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -112,6 +113,7 @@ def draw_image_between_markers(img: np.ndarray,
 
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
+    example_path = join(current_file_path, EXAMPLE_PATH)
 
     matrix, coefficients = camera_calibration(current_path=current_file_path)
     detector = aruco_detector()
@@ -136,7 +138,7 @@ if __name__ == "__main__":
                 idx2 = marker_indices[1]
 
                 marker_id = int(idx1 + idx2)
-                img_path = join(current_file_path, f"src/photos/treasure_{marker_id}.jpg")
+                img_path = join(example_path, f"treasure_{marker_id}.jpg")
 
                 if not exists(img_path):
                     print(f"[ERROR] Image not found: {img_path}")
