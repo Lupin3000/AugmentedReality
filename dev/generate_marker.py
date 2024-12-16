@@ -17,7 +17,7 @@ if __name__ == "__main__":
         print(f"[INFO] Create directory: {target_directory}")
         makedirs(target_directory)
 
-    parser = ArgumentParser(description="Generate ArUco marker image")
+    parser = ArgumentParser(description="Generate ArUco marker JPG")
     parser.add_argument("--id", type=int, default=ARUCO_MARKER_ID, help="ArUco marker id")
     parser.add_argument("--size", type=int, default=ARUCO_MARKER_SIZE, help="ArUco marker size in pixels")
     args = parser.parse_args()

@@ -133,7 +133,7 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 
 ## Generate ArUco markers
 
-With the Python script `dev/generate_marker.py`, you can create your own ArUco markers. To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0` and `1`.
+With the Python script `dev/generate_marker.py`, you can create your own ArUco markers. To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0`, `1` and `2`.
 
 > Important are constants **ARUCO_DICT_ID** as well as **ARUCO_MARKER_ID** and **ARUCO_MARKER_SIZE**.
 >
@@ -151,8 +151,8 @@ The default of **ARUCO_DICT_ID** set is: `DICT_4X4_50`, which contains 50 predef
 # run marker generation for id 0
 (.venv) $ python3 dev/generate_marker.py --id 0 --size 100
 
-# run marker generation for id 1
-(.venv) $ python3 dev/generate_marker.py --id 1 --size 100
+# run marker generation for id 0 till 2 (example markers)
+(.venv) $ for id in {0..2}; do python3 dev/generate_marker.py --id "$id" --size 100; done
 
 # show created markers (optional)
 (.venv) $ ls -la dev/markers/
