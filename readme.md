@@ -162,7 +162,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 ## Run examples
 
 - `example_01.py` shows for each detected marker the respective ID.
-- `example_02.py` shows for each detected marker a letter from alphabet.
+- `example_02.py` shows for each detected marker a letter from alphabet (_max. 26 letters_).
 - `example_03.py` shows an arrow between markers centers.
 - `example_04.py` shows the distance between markers (_in pixels and cm_).
 - `example_05.py` shows a scaled picture on each marker.
