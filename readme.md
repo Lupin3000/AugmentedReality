@@ -33,11 +33,12 @@ The final folders and file structure of the project (_if no calibration has yet 
 $ tree .
 |____.gitignore
 |____requirements.txt
-|____example_0.py
-|____example_1.py
-|____example_2.py
-|____example_3.py
-|____example_4.py
+|____example_01.py
+|____example_02.py
+|____example_03.py
+|____example_05.py
+|____example_06.py
+|____example_07.py
 |____dev
 | |____img
 | | |____pattern.png
@@ -158,11 +159,12 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 
 ## Run examples
 
-- `example_0.py` shows for each detected marker the respective ID.
-- `example_1.py` shows scaled pictures on each marker position.
-- `example_2.py` shows scaled video loops on each marker position.
-- `example_3.py` shows scaled pictures on two marker positions.
-- `example_4.py` shows a line and distance (_pixels, cm_) between two markers.
+- `example_01.py` shows for each detected marker the respective ID.
+- `example_02.py` shows for each detected marker a letter from alphabet.
+- `example_03.py` shows the distance between two markers (_pixels, cm_).
+- `example_05.py` shows a scaled picture on each marker.
+- `example_06.py` shows a scaled video on each marker.
+- `example_07.py` shows a scaled picture between two markers.
 
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 
@@ -173,20 +175,11 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 **Execute examples (_commands_):**
 
 ```shell
-# show info overlay on each marker
-(.venv) $ python3 example_0.py
+# execute example 01
+(.venv) $ python3 example_01.py
 
-# show image overlay on each marker
-(.venv) $ python3 example_1.py
-
-# show video overlay on each marker
-(.venv) $ python3 example_2.py
-
-# show image overlay between two markers
-(.venv) $ python3 example_3.py
-
-# show line overlay between two markers
-(.venv) $ python3 example_4.py
+# execute example 02
+(.venv) $ python3 example_02.py
 ```
 
 To close the window and to stop the Python script, press the **q-key**.

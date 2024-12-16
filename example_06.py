@@ -140,7 +140,7 @@ if __name__ == "__main__":
                 if ret:
                     frame = draw_video_on_marker(frame, r_vec, t_vec, matrix, coefficients, video_capture)
 
-        cv2.imshow("AR Marker Detection: with videos", frame)
+        cv2.imshow("AR Marker Detection: show videos", frame)
 
     cap.release()
     for vc in video_cache.values():

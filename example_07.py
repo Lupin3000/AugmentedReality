@@ -153,7 +153,7 @@ if __name__ == "__main__":
 
                 frame = draw_image_between_markers(frame, corners1, corners2, image_capture)
 
-        cv2.imshow("AR Multi-Marker Detection: with image", frame)
+        cv2.imshow("AR Multi-Marker Detection: show image", frame)
 
     cap.release()
     cv2.destroyAllWindows()

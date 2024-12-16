@@ -12,9 +12,10 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
-INFO_COLOR_A: tuple = (150, 150, 150)
-INFO_COLOR_B: tuple = (150, 200, 200)
-LINE_HEIGHT: int = 20
+FONT_COLOR: tuple = (100, 200, 200)
+FONT_SCALE: float = 5.0
+FONT_THICKNESS: int = 5
+FONT_FACE: int = cv2.FONT_HERSHEY_SIMPLEX
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -54,6 +55,21 @@ def aruco_detector() -> cv2.aruco.ArucoDetector:
     return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
 
 
+def id_to_letter(m_id: int) -> str:
+    """
+    Converts a numerical marker ID to a corresponding letter (A-Z).
+    If the ID exceeds the alphabet range, it wraps around using modulo.
+
+    :param m_id: The numerical marker ID.
+    :type m_id: int
+
+    :return: Corresponding letter as a string.
+    :rtype: str
+    """
+    alphabet_size = 26
+    return chr((int(m_id) % alphabet_size) + ord('A'))
+
+
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
 
@@ -73,40 +89,25 @@ if __name__ == "__main__":
         corners, ids, rejected = detector.detectMarkers(gray)
 
         if ids is not None:
-            frame = cv2.aruco.drawDetectedMarkers(frame, corners, ids)
+            for i, corner_group in enumerate(corners):
+                marker_id = int(ids[i][0])
+                letter = id_to_letter(marker_id)
 
-            if len(ids) > 1:
-                centers = []
-                for i in range(len(corners)):
-                    c = corners[i][0]
-                    center = c.mean(axis=0)
-                    centers.append(center)
+                top_left = corner_group[0][0]
+                bottom_right = corner_group[0][2]
+                center_x = int((top_left[0] + bottom_right[0]) / 2)
+                center_y = int((top_left[1] + bottom_right[1]) / 2)
 
-                cv2.line(frame, tuple(map(int, centers[0])), tuple(map(int, centers[1])), INFO_COLOR_A, 2)
+                cv2.putText(img=frame,
+                            text=letter,
+                            org=(center_x, center_y),
+                            fontFace=FONT_FACE,
+                            fontScale=FONT_SCALE,
+                            color=FONT_COLOR,
+                            thickness=FONT_THICKNESS,
+                            lineType=cv2.LINE_AA)
 
-                pt1 = tuple(map(int, centers[0]))
-                pt2 = tuple(map(int, centers[1]))
-                midpoint = ((pt1[0] + pt2[0]) // 2, (pt1[1] + pt2[1]) // 2)
-
-                distance_pixels = np.linalg.norm(np.array(pt1) - np.array(pt2))
-                message = f"Distance: {distance_pixels:.2f} px"
-
-                cv2.putText(frame, message, midpoint, cv2.FONT_HERSHEY_SIMPLEX, 0.5, INFO_COLOR_A, 2)
-
-                ret_1, _, vec_1 = cv2.solvePnP(OBJ_POINTS, corners[0], matrix, coefficients)
-                ret_2, _, vec_2 = cv2.solvePnP(OBJ_POINTS, corners[1], matrix, coefficients)
-
-                if ret_1 and ret_2:
-                    midpoint_below = (midpoint[0], midpoint[1] + LINE_HEIGHT)
-
-                    distance_meters = np.linalg.norm(vec_1 - vec_2)
-                    distance_cm = distance_meters * 100
-
-                    message = f"Distance: {distance_cm:.2f} cm"
-                    cv2.putText(frame, message, midpoint_below, cv2.FONT_HERSHEY_SIMPLEX, 0.5, INFO_COLOR_B, 2)
-
-
-        cv2.imshow("AR Marker ID Detection: Draw line", frame)
+        cv2.imshow("AR Marker ID Detection: show fonts", frame)
 
     cap.release()
     cv2.destroyAllWindows()
