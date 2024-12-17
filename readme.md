@@ -8,7 +8,7 @@ Following details are explained and have examples:
 - ArUco marker generation
 - ArUco marker detection
 - ArUco marker pose estimation
-- Marker actions
+- Marker interactions
 
 ## Minimum requirements
 
@@ -135,6 +135,8 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 
 ## Generate ArUco markers
 
+> If you cannot print out the marker, use this [online marker generator](https://chev.me/arucogen/) on your mobile!
+
 With the Python script `dev/generate_marker.py`, you can create your own ArUco markers. To follow the examples, you should print out markers with **ARUCO_MARKER_ID** `0`, `1` and `2`.
 
 > Important are constants **ARUCO_DICT_ID** as well as **ARUCO_MARKER_ID** and **ARUCO_MARKER_SIZE**.
@@ -169,7 +171,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 - `example_03.py` shows an arrow between each marker center and distance in pixel.
 - `example_04.py` shows a line between each marker center and distance in cm.
 - `example_05.py` shows a 3D cube on each marker.
-- `example_06.py` shows a X, Y, Z axes on each marker.
+- `example_06.py` shows an X, Y, Z axes on each marker.
 - `example_07.py` shows a scaled picture on each marker.
 - `example_08.py` shows a scaled video loop on each marker.
 - `example_09.py` shows a scaled picture between two specific markers.
