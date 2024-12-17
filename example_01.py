@@ -4,10 +4,22 @@ import cv2
 ARUCO_DICT_ID: int = cv2.aruco.DICT_4X4_50
 
 
-if __name__ == "__main__":
+def aruco_detector() -> cv2.aruco.ArucoDetector:
+    """
+    Initializes and returns an ArUco detector configured with a predefined
+    dictionary and default detection parameters.
+
+    :return: A configured ArUcoDetector instance ready to detect markers.
+    :rtype: cv2.aruco.ArucoDetector
+    """
     aruco_dict = cv2.aruco.getPredefinedDictionary(ARUCO_DICT_ID)
     aruco_params = cv2.aruco.DetectorParameters()
-    detector = cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
+
+    return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
+
+
+if __name__ == "__main__":
+    detector = aruco_detector()
 
     cap = cv2.VideoCapture(0)
     print("[INFO] Place ArUco markers in front of the camera.")
