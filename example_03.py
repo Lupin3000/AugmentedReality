@@ -12,8 +12,12 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
-ARROW_COLOR: tuple = (0, 255, 0)
-ARROW_THICKNESS: int = 5
+FONT_COLOR: tuple = (50, 50, 50)
+FONT_SCALE: float = 1.0
+FONT_THICKNESS: int = 2
+FONT_FACE: int = cv2.FONT_HERSHEY_SIMPLEX
+ARROW_COLOR: tuple = (10, 255, 10)
+ARROW_THICKNESS: int = 3
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -91,7 +95,19 @@ if __name__ == "__main__":
                                         thickness=ARROW_THICKNESS,
                                         line_type=cv2.LINE_AA)
 
-        cv2.imshow("AR Marker ID Detection: show arrows", frame)
+                        distance = int(np.sqrt((other_x - center_x) ** 2 + (other_y - center_y) ** 2))
+                        mid_x = (center_x + other_x) // 2
+                        mid_y = (center_y + other_y) // 2
+
+                        cv2.putText(frame, f"{distance} px",
+                                    org=(mid_x, mid_y),
+                                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                                    fontScale=FONT_SCALE,
+                                    color=FONT_COLOR,
+                                    thickness=FONT_THICKNESS,
+                                    lineType=cv2.LINE_AA)
+
+        cv2.imshow("AR Marker ID Detection: show arrows and distance", frame)
 
     cap.release()
     cv2.destroyAllWindows()
