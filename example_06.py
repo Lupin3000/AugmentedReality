@@ -104,8 +104,9 @@ if __name__ == "__main__":
     matrix, coefficients = camera_calibration(current_path=current_file_path)
     detector = aruco_detector()
 
-    cap = cv2.VideoCapture(0)
     image_cache = {}
+
+    cap = cv2.VideoCapture(0)
     print("[INFO] Press 'q' to quit.")
 
     while True:
