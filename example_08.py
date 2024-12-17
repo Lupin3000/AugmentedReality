@@ -12,7 +12,7 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
-EXAMPLE_PATH: str = "src/photos/"
+EXAMPLE_PATH: str = "src/videos/"
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -52,64 +52,54 @@ def aruco_detector() -> cv2.aruco.ArucoDetector:
     return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
 
 
-def draw_image_between_markers(img: np.ndarray,
-                               corners_marker_0: np.ndarray,
-                               corners_marker_1: np.ndarray,
-                               overlay_image: np.ndarray) -> np.ndarray:
+def draw_video_on_marker(img: np.ndarray,
+                         rotation_vector: np.ndarray,
+                         translation_vector: np.ndarray,
+                         camera_matrix: np.ndarray,
+                         dist_coefficients: np.ndarray,
+                         video: cv2.VideoCapture) -> np.ndarray:
     """
-    Draws an overlay image between two markers on a given image using a homography
-    transformation.
+    Draws a video frame onto a detected marker in the provided image.
 
-    :param img: The target image on which overlay image will be drawn
+    :param img: The input frame onto which the overlay will be drawn (BGR format).
     :type img: np.ndarray
-    :param corners_marker_0: Corner points of the first marker (marker 0)
-    :type corners_marker_0: np.ndarray
-    :param corners_marker_1: Corner points of the second marker (marker 1)
-    :type corners_marker_1: np.ndarray
-    :param overlay_image: The overlay image to be drawn between the markers
-    :type overlay_image: np.ndarray
+    :param rotation_vector: The rotation vector that describes the orientation of the marker.
+    :type rotation_vector: np.ndarray
+    :param translation_vector: The translation vector that describes the position of the marker.
+    :type translation_vector: np.ndarray
+    :param camera_matrix: The intrinsic camera matrix for the camera.
+    :type camera_matrix: np.ndarray
+    :param dist_coefficients: The distortion coefficients of the camera.
+    :type dist_coefficients: np.ndarray
+    :param video: A cv2.VideoCapture object used to read frames from a video source.
+    :type video: cv2.VideoCapture
 
-    :return: The image with the overlay drawn between the markers
+    :return: An image with the video frame overlaid on the detected marker.
     :rtype: np.ndarray
     """
-    top_left_corner = corners_marker_0[np.argmin(corners_marker_0.sum(axis=1))]
-    bottom_right_corner = corners_marker_1[np.argmax(corners_marker_1.sum(axis=1))]
+    v_ret, overlay_frame = video.read()
+    if not v_ret:
+        video.set(cv2.CAP_PROP_POS_FRAMES, 0)
+        v_ret, overlay_frame = video.read()
 
-    overlay_width = int(np.linalg.norm(top_left_corner[0] - bottom_right_corner[0]))
-    # overlay_height = int(overlay_width * (overlay_image.shape[0] / overlay_image.shape[1]))
+    video_height, video_width = overlay_frame.shape[:2]
+    video_aspect_ratio = video_width / video_height
 
-    dest_points = np.array([
-        top_left_corner,
-        [top_left_corner[0] + overlay_width, top_left_corner[1]],
-        bottom_right_corner,
-        [bottom_right_corner[0] - overlay_width, bottom_right_corner[1]]
-    ], dtype=np.float32)
+    img_points, _ = cv2.projectPoints(OBJ_POINTS, rotation_vector, translation_vector, camera_matrix, dist_coefficients)
+    img_points = np.int32(img_points).reshape(-1, 2)
 
-    src_points = np.array([
-        [0, 0],
-        [overlay_image.shape[1], 0],
-        [overlay_image.shape[1], overlay_image.shape[0]],
-        [0, overlay_image.shape[0]]
-    ], dtype=np.float32)
+    rect = cv2.boundingRect(img_points)
+    x, y, marker_width, marker_height = rect
+    new_width = int(marker_height * video_aspect_ratio)
+    overlay_frame_resized = cv2.resize(overlay_frame, (new_width, marker_height))
+    new_x = x + (marker_width - new_width) // 2
+    new_x = max(0, new_x)
+    overlay_frame_resized = overlay_frame_resized[:, :min(new_width, img.shape[1] - new_x)]
 
-    homography_matrix, _ = cv2.findHomography(src_points, dest_points)
-    if homography_matrix is None:
-        print("[WARNING] Homography matrix is None. Returning original image.")
-        return img
-
-    warped_overlay = cv2.warpPerspective(overlay_image, homography_matrix, (img.shape[1], img.shape[0]))
-    if warped_overlay.shape[2] == 4:
-        alpha_channel = warped_overlay[:, :, 3] / 255.0
-        rgb_overlay = warped_overlay[:, :, :3]
-
-        for c in range(3):
-            img[:, :, c] = img[:, :, c] * (1 - alpha_channel) + rgb_overlay[:, :, c] * alpha_channel
-    else:
-        mask = (warped_overlay > 0).any(axis=2)
-        img[mask] = warped_overlay[mask]
+    for val in range(3):
+        img[y:y + marker_height, new_x:new_x + overlay_frame_resized.shape[1], val] = overlay_frame_resized[:, :, val]
 
     return img
-
 
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
@@ -118,39 +108,44 @@ if __name__ == "__main__":
     matrix, coefficients = camera_calibration(current_path=current_file_path)
     detector = aruco_detector()
 
-    image_cache = {}
+    video_cache = {}
 
     cap = cv2.VideoCapture(0)
     print("[INFO] Press 'q' to quit.")
 
     while True:
         ret, frame = cap.read()
+
         if not ret or (cv2.waitKey(1) & 0xFF == ord('q')):
             break
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         corners, ids, _ = detector.detectMarkers(gray)
 
-        if ids is not None and len(ids) > 1:
-            marker_id_sum = int(ids[0][0] + ids[1][0])
-            img_path = join(example_path, f"treasure_{marker_id_sum}.jpg")
+        if ids is not None:
+            for i in range(len(ids)):
+                marker_id = ids[i][0]
+                video_path = join(example_path, f"video_{marker_id}.mp4")
 
-            if not exists(img_path):
-                print(f"[ERROR] Image not found: {img_path}")
-                continue
+                if not exists(video_path):
+                    print(f"[ERROR] Video not found: {video_path}")
+                    continue
 
-            if marker_id_sum not in image_cache:
-                print(f"[INFO] Loading image: {img_path}")
-                image_cache[marker_id_sum] = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+                if marker_id not in video_cache:
+                    print(f"[INFO] Loading video: {video_path}")
+                    video_cache[marker_id] = cv2.VideoCapture(video_path)
 
-            image_capture = image_cache[marker_id_sum]
+                video_capture = video_cache[marker_id]
+                raw_img_points = corners[i][0]
 
-            corners_2 = corners[0][0]
-            corners_1 = corners[1][0]
+                ret, r_vec, t_vec = cv2.solvePnP(OBJ_POINTS, raw_img_points, matrix, coefficients)
 
-            frame = draw_image_between_markers(frame, corners_1, corners_2, image_capture)
+                if ret:
+                    frame = draw_video_on_marker(frame, r_vec, t_vec, matrix, coefficients, video_capture)
 
-        cv2.imshow("AR Marker Detection: show image on two markers", frame)
+        cv2.imshow("AR Marker Detection: show video on each marker", frame)
 
     cap.release()
+    for vc in video_cache.values():
+        vc.release()
     cv2.destroyAllWindows()

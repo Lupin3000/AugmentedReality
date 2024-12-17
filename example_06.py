@@ -12,7 +12,6 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
-EXAMPLE_PATH: str = "src/photos/"
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -52,59 +51,11 @@ def aruco_detector() -> cv2.aruco.ArucoDetector:
     return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
 
 
-def draw_image_on_marker(img: np.ndarray,
-                         rotation_vector: np.ndarray,
-                         translation_vector :np.ndarray,
-                         camera_matrix: np.ndarray,
-                         dist_coefficients: np.ndarray,
-                         overlay_image: np.array) -> np.ndarray:
-    """
-    Draws a specified overlay image onto a detected marker within a given image.
-
-    :param img: The input frame onto which the overlay will be drawn (BGR format).
-    :type img: np.ndarray
-    :param rotation_vector: The rotation vector that describes the orientation of the marker.
-    :type rotation_vector: np.ndarray
-    :param translation_vector: The translation vector that describes the position of the marker.
-    :type translation_vector: np.ndarray
-    :param camera_matrix: The intrinsic camera matrix for the camera.
-    :type camera_matrix: np.ndarray
-    :param dist_coefficients: The distortion coefficients of the camera.
-    :type dist_coefficients: np.ndarray
-    :param overlay_image: The image to overlay on the detected marker.
-    :type overlay_image: np.ndarray
-
-    :return: The modified image with the overlay image drawn on the detected marker.
-    :rtype: np.ndarray
-    """
-    img_points, _ = cv2.projectPoints(OBJ_POINTS, rotation_vector, translation_vector, camera_matrix, dist_coefficients)
-    img_points = np.int32(img_points).reshape(-1, 2)
-
-    rect = cv2.boundingRect(img_points)
-    x, y, w, h = rect
-    overlay_image_resized = cv2.resize(overlay_image, (w, h))
-
-    if overlay_image_resized.shape[2] == 4:
-        overlay_image_resized_rgb = overlay_image_resized[:, :, :3]
-        overlay_alpha = overlay_image_resized[:, :, 3:] / 255.0
-        overlay_image_resized_rgb = (overlay_image_resized_rgb * overlay_alpha).astype(np.uint8)
-    else:
-        overlay_image_resized_rgb = overlay_image_resized
-
-    for val in range(0, 3):
-        img[y:y + h, x:x + w, val] = overlay_image_resized_rgb[:, :, val]
-
-    return img
-
-
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
-    example_path = join(current_file_path, EXAMPLE_PATH)
 
     matrix, coefficients = camera_calibration(current_path=current_file_path)
     detector = aruco_detector()
-
-    image_cache = {}
 
     cap = cv2.VideoCapture(0)
     print("[INFO] Press 'q' to quit.")
@@ -119,27 +70,12 @@ if __name__ == "__main__":
         corners, ids, _ = detector.detectMarkers(gray)
 
         if ids is not None:
-            for i in range(len(ids)):
-                marker_id = ids[i][0]
-                img_path = join(example_path, f"monk_{marker_id}.jpg")
+            for i, corner_group in enumerate(corners):
+                _, rvec, tvec = cv2.solvePnP(OBJ_POINTS, corner_group, matrix, coefficients)
 
-                if not exists(img_path):
-                    print(f"[ERROR] Image not found: {img_path}")
-                    continue
+                frame = cv2.drawFrameAxes(frame, matrix, coefficients, rvec, tvec, 0.05)
 
-                if marker_id not in image_cache:
-                    print(f"[INFO] Loading image: {img_path}")
-                    image_cache[marker_id] = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
-
-                image_capture = image_cache[marker_id]
-
-                raw_img_points = corners[i][0]
-                ret, r_vec, t_vec = cv2.solvePnP(OBJ_POINTS, raw_img_points, matrix, coefficients)
-
-                if ret:
-                    frame = draw_image_on_marker(frame, r_vec, t_vec, matrix, coefficients, image_capture)
-
-        cv2.imshow("AR Marker Detection: show image on each marker", frame)
+        cv2.imshow("AR Marker ID Detection: show X, Y and Z coordination axes", frame)
 
     cap.release()
     cv2.destroyAllWindows()
