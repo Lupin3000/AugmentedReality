@@ -99,7 +99,8 @@ if __name__ == "__main__":
                         mid_x = (center_x + other_x) // 2
                         mid_y = (center_y + other_y) // 2
 
-                        cv2.putText(frame, f"{distance} px",
+                        cv2.putText(img=frame,
+                                    text=f"{distance} px",
                                     org=(mid_x, mid_y),
                                     fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                                     fontScale=FONT_SCALE,

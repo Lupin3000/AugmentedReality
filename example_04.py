@@ -1,4 +1,5 @@
 from os.path import dirname, abspath, exists, join
+from itertools import combinations
 import cv2
 import numpy as np
 
@@ -12,9 +13,12 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
-INFO_COLOR_A: tuple = (150, 150, 150)
-INFO_COLOR_B: tuple = (150, 200, 200)
-LINE_HEIGHT: int = 20
+FONT_COLOR: tuple = (50, 50, 50)
+FONT_SCALE: float = 1.0
+FONT_THICKNESS: int = 2
+FONT_FACE: int = cv2.FONT_HERSHEY_SIMPLEX
+LINE_COLOR: tuple = (25, 255, 25)
+LINE_THICKNESS: int = 2
 
 
 def camera_calibration(current_path: str) -> tuple:
@@ -54,6 +58,26 @@ def aruco_detector() -> cv2.aruco.ArucoDetector:
     return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
 
 
+def calculate_distance(tvec_1: np.ndarray, tvec_2: np.ndarray) -> float:
+    """
+    Calculate the Euclidean distance between two translation vectors.
+    The return is float value in centimeters.
+
+    :param tvec_1: Translation vector of marker 1.
+    :type tvec_1: np.ndarray
+    :param tvec_2: Translation vector of marker 2.
+    :type tvec_2: np.ndarray
+
+    :return: Distance in centimeters.
+    :rtype: float
+    """
+    tvec_1 = np.array(tvec_1).flatten()
+    tvec_2 = np.array(tvec_2).flatten()
+    distance_meters = np.linalg.norm(tvec_1 - tvec_2)
+
+    return distance_meters * 100
+
+
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
 
@@ -69,42 +93,41 @@ if __name__ == "__main__":
         if not ret or (cv2.waitKey(1) & 0xFF == ord('q')):
             break
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, rejected = detector.detectMarkers(gray)
+        frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        corners, ids, rejected = detector.detectMarkers(frame_gray)
+
+        tvecs = []
+        centers = []
 
         if ids is not None:
-            if len(ids) > 1:
-                centers = []
-                for i in range(len(corners)):
-                    c = corners[i][0]
-                    center = c.mean(axis=0)
-                    centers.append(center)
+            for i in range(len(ids)):
+                retval, rvec, tvec = cv2.solvePnP(OBJ_POINTS, corners[i][0], matrix, coefficients)
+                tvecs.append(tvec)
 
-                cv2.line(frame, tuple(map(int, centers[0])), tuple(map(int, centers[1])), INFO_COLOR_A, 2)
+                center_x = int(np.mean(corners[i][0][:, 0]))
+                center_y = int(np.mean(corners[i][0][:, 1]))
+                centers.append((center_x, center_y))
 
-                pt1 = tuple(map(int, centers[0]))
-                pt2 = tuple(map(int, centers[1]))
-                midpoint = ((pt1[0] + pt2[0]) // 2, (pt1[1] + pt2[1]) // 2)
+            if len(tvecs) > 1:
+                for (idx1, idx2) in combinations(range(len(tvecs)), 2):
+                    distance = calculate_distance(tvecs[idx1], tvecs[idx2])
+                    center_1 = centers[idx1]
+                    center_2 = centers[idx2]
 
-                distance_pixels = np.linalg.norm(np.array(pt1) - np.array(pt2))
-                message = f"Distance: {distance_pixels:.2f} px"
+                    cv2.line(frame, center_1, center_2, LINE_COLOR, LINE_THICKNESS)
 
-                cv2.putText(frame, message, midpoint, cv2.FONT_HERSHEY_SIMPLEX, 0.5, INFO_COLOR_A, 2)
+                    mid_point = (int((center_1[0] + center_2[0]) / 2), int((center_1[1] + center_2[1]) / 2))
 
-                ret_1, _, vec_1 = cv2.solvePnP(OBJ_POINTS, corners[0], matrix, coefficients)
-                ret_2, _, vec_2 = cv2.solvePnP(OBJ_POINTS, corners[1], matrix, coefficients)
+                    cv2.putText(img=frame,
+                                text=f"{distance:.2f} cm",
+                                org=mid_point,
+                                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                                fontScale=FONT_SCALE,
+                                color=FONT_COLOR,
+                                thickness=FONT_THICKNESS,
+                                lineType=cv2.LINE_AA)
 
-                if ret_1 and ret_2:
-                    midpoint_below = (midpoint[0], midpoint[1] + LINE_HEIGHT)
-
-                    distance_meters = np.linalg.norm(vec_1 - vec_2)
-                    distance_cm = distance_meters * 100
-
-                    message = f"Distance: {distance_cm:.2f} cm"
-                    cv2.putText(frame, message, midpoint_below, cv2.FONT_HERSHEY_SIMPLEX, 0.5, INFO_COLOR_B, 2)
-
-
-        cv2.imshow("AR Marker ID Detection: show distance", frame)
+        cv2.imshow("AR Marker ID Detection: pose estimation and distance", frame)
 
     cap.release()
     cv2.destroyAllWindows()
