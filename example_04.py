@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
         if ids is not None:
             for i in range(len(ids)):
-                retval, rvec, tvec = cv2.solvePnP(OBJ_POINTS, corners[i][0], matrix, coefficients)
+                _, _, tvec = cv2.solvePnP(OBJ_POINTS, corners[i][0], matrix, coefficients)
                 tvecs.append(tvec)
 
                 center_x = int(np.mean(corners[i][0][:, 0]))
@@ -127,7 +127,7 @@ if __name__ == "__main__":
                                 thickness=FONT_THICKNESS,
                                 lineType=cv2.LINE_AA)
 
-        cv2.imshow("AR Marker ID Detection: pose estimation and distance", frame)
+        cv2.imshow("AR Marker ID Detection: pose estimation and distance between markers", frame)
 
     cap.release()
     cv2.destroyAllWindows()

@@ -24,7 +24,7 @@ if __name__ == "__main__":
         if ids is not None:
             frame = cv2.aruco.drawDetectedMarkers(frame, corners, ids)
 
-        cv2.imshow("AR Marker ID Detection", frame)
+        cv2.imshow("AR Marker ID Detection: show id", frame)
 
     cap.release()
     cv2.destroyAllWindows()

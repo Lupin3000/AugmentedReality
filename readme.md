@@ -42,6 +42,7 @@ $ tree .
 |____example_05.py
 |____example_06.py
 |____example_07.py
+|____example_08.py
 |____dev
 | |____img
 | | |____pattern.png
@@ -166,9 +167,10 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 - `example_02.py` shows for each detected marker a letter from alphabet (_max. 26 letters_).
 - `example_03.py` shows an arrow between each marker center and distance in pixel.
 - `example_04.py` shows a line between each marker center and distance in cm.
-- `example_05.py` shows a scaled picture on each marker.
-- `example_06.py` shows a scaled video loop on each marker.
-- `example_07.py` shows a scaled picture between two specific markers.
+- `example_05.py` shows a 3D cube on each marker.
+- `example_06.py` shows a scaled picture on each marker.
+- `example_07.py` shows a scaled video loop on each marker.
+- `example_08.py` shows a scaled picture between two specific markers.
 
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 

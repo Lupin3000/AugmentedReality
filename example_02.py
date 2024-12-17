@@ -107,7 +107,7 @@ if __name__ == "__main__":
                             thickness=FONT_THICKNESS,
                             lineType=cv2.LINE_AA)
 
-        cv2.imshow("AR Marker ID Detection: show fonts", frame)
+        cv2.imshow("AR Marker ID Detection: show fonts on each marker", frame)
 
     cap.release()
     cv2.destroyAllWindows()

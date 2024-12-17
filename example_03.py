@@ -108,7 +108,7 @@ if __name__ == "__main__":
                                     thickness=FONT_THICKNESS,
                                     lineType=cv2.LINE_AA)
 
-        cv2.imshow("AR Marker ID Detection: show arrows and distance", frame)
+        cv2.imshow("AR Marker ID Detection: show arrows and distance between markers", frame)
 
     cap.release()
     cv2.destroyAllWindows()
