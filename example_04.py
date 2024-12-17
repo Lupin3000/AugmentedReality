@@ -114,7 +114,7 @@ if __name__ == "__main__":
                     center_1 = centers[idx1]
                     center_2 = centers[idx2]
 
-                    cv2.line(frame, center_1, center_2, LINE_COLOR, LINE_THICKNESS)
+                    cv2.line(img=frame, pt1=center_1, pt2=center_2, color=LINE_COLOR, thickness=LINE_THICKNESS)
 
                     mid_point = (int((center_1[0] + center_2[0]) / 2), int((center_1[1] + center_2[1]) / 2))
 

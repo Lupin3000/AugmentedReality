@@ -44,6 +44,7 @@ $ tree .
 |____example_07.py
 |____example_08.py
 |____example_09.py
+|____example_10.py
 |____dev
 | |____img
 | | |____pattern.png
@@ -52,6 +53,7 @@ $ tree .
 | |____generate_marker.py
 |____src
 | |____videos
+| | |____demo.mp4
 | | |____video_0.mp4
 | | |____video_1.mp4
 | |____photos
@@ -172,9 +174,10 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 - `example_04.py` shows a line between each marker center and distance in cm.
 - `example_05.py` shows a 3D cube on each marker.
 - `example_06.py` shows an X, Y, Z axes on each marker.
-- `example_07.py` shows a scaled picture on each marker.
-- `example_08.py` shows a scaled video loop on each marker.
-- `example_09.py` shows a scaled picture between two specific markers.
+- `example_07.py` shows a scaled picture on each marker, by marker id.
+- `example_08.py` shows a scaled video loop on each marker, by marker id.
+- `example_09.py` shows a scaled picture between two specific markers, by marker id combination.
+- `example_10.py` shows a scaled video behind a circled mask, created by all markers.
 
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 
