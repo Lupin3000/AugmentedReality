@@ -134,9 +134,9 @@ if __name__ == "__main__":
                 image_capture = image_cache[marker_id]
 
                 raw_img_points = corners[i][0]
-                ret, r_vec, t_vec = cv2.solvePnP(OBJ_POINTS, raw_img_points, matrix, coefficients)
+                m_ret, r_vec, t_vec = cv2.solvePnP(OBJ_POINTS, raw_img_points, matrix, coefficients)
 
-                if ret:
+                if m_ret:
                     frame = draw_image_on_marker(frame, r_vec, t_vec, matrix, coefficients, image_capture)
 
         cv2.imshow("AR Marker Detection: show image on each marker", frame)

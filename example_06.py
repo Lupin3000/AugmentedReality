@@ -71,9 +71,10 @@ if __name__ == "__main__":
 
         if ids is not None:
             for i, corner_group in enumerate(corners):
-                _, rvec, tvec = cv2.solvePnP(OBJ_POINTS, corner_group, matrix, coefficients)
+                m_ret, rvec, tvec = cv2.solvePnP(OBJ_POINTS, corner_group, matrix, coefficients)
 
-                frame = cv2.drawFrameAxes(frame, matrix, coefficients, rvec, tvec, 0.05)
+                if m_ret:
+                    frame = cv2.drawFrameAxes(frame, matrix, coefficients, rvec, tvec, 0.05)
 
         cv2.imshow("AR Marker ID Detection: show X, Y and Z coordination axes", frame)
 

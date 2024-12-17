@@ -82,15 +82,16 @@ if __name__ == "__main__":
 
         if ids is not None:
             for i, corner_group in enumerate(corners):
-                _, rvec, tvec = cv2.solvePnP(OBJ_POINTS, corner_group, matrix, coefficients)
+                m_ret, rvec, tvec = cv2.solvePnP(OBJ_POINTS, corner_group, matrix, coefficients)
 
-                image_points, _ = cv2.projectPoints(CUBE_POINTS, rvec, tvec, matrix, coefficients)
-                image_points = np.int32(image_points).reshape(-1, 2)
+                if m_ret:
+                    image_points, _ = cv2.projectPoints(CUBE_POINTS, rvec, tvec, matrix, coefficients)
+                    image_points = np.int32(image_points).reshape(-1, 2)
 
-                for j in range(4):
-                    cv2.line(frame, tuple(image_points[j]), tuple(image_points[(j + 1) % 4]), CUBE_COLOR, 2)
-                    cv2.line(frame, tuple(image_points[j + 4]), tuple(image_points[((j + 1) % 4) + 4]), CUBE_COLOR, 2)
-                    cv2.line(frame, tuple(image_points[j]), tuple(image_points[j + 4]), CUBE_COLOR, 2)
+                    for j in range(4):
+                        cv2.line(frame, tuple(image_points[j]), tuple(image_points[(j + 1) % 4]), CUBE_COLOR, 2)
+                        cv2.line(frame, tuple(image_points[j + 4]), tuple(image_points[((j + 1) % 4) + 4]), CUBE_COLOR, 2)
+                        cv2.line(frame, tuple(image_points[j]), tuple(image_points[j + 4]), CUBE_COLOR, 2)
 
 
         cv2.imshow("AR Marker ID Detection: show 3D cube on each marker", frame)
