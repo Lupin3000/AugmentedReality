@@ -73,7 +73,7 @@ if __name__ == "__main__":
             break
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, rejected = detector.detectMarkers(gray)
+        corners, ids, _ = detector.detectMarkers(gray)
 
         if ids is not None and len(ids) > 1:
             marker_centers = []

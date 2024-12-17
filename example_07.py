@@ -131,18 +131,18 @@ if __name__ == "__main__":
         corners, ids, _ = detector.detectMarkers(gray)
 
         if ids is not None and len(ids) > 1:
-            marker_id = int(ids[0][0] + ids[1][0])
-            img_path = join(example_path, f"treasure_{marker_id}.jpg")
+            marker_id_sum = int(ids[0][0] + ids[1][0])
+            img_path = join(example_path, f"treasure_{marker_id_sum}.jpg")
 
             if not exists(img_path):
                 print(f"[ERROR] Image not found: {img_path}")
                 continue
 
-            if marker_id not in image_cache:
+            if marker_id_sum not in image_cache:
                 print(f"[INFO] Loading image: {img_path}")
-                image_cache[marker_id] = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+                image_cache[marker_id_sum] = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
 
-            image_capture = image_cache[marker_id]
+            image_capture = image_cache[marker_id_sum]
 
             corners_2 = corners[0][0]
             corners_1 = corners[1][0]

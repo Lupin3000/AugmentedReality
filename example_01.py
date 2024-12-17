@@ -19,7 +19,7 @@ if __name__ == "__main__":
             break
 
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, rejected = detector.detectMarkers(frame_gray)
+        corners, ids, _ = detector.detectMarkers(frame_gray)
 
         if ids is not None:
             frame = cv2.aruco.drawDetectedMarkers(frame, corners, ids)
