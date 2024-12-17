@@ -121,6 +121,7 @@ if __name__ == "__main__":
     image_cache = {}
 
     cap = cv2.VideoCapture(0)
+    print("[INFO] Place ArUco markers in front of the camera.")
     print("[INFO] Press 'q' to quit.")
 
     while True:
