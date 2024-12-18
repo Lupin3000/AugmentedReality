@@ -82,7 +82,7 @@ if __name__ == "__main__":
             masked_frame = cv2.bitwise_and(roi, roi, mask=cv2.bitwise_not(mask[y_start:y_end, x_start:x_end, 0]))
             frame[y_start:y_end, x_start:x_end] = cv2.add(masked_video, masked_frame)
 
-        cv2.imshow("AR Marker ID Detection: a markers create a video file mask", frame)
+        cv2.imshow("AR Marker ID Detection: all markers create a video file mask", frame)
 
     cap.release()
     cv2.destroyAllWindows()
