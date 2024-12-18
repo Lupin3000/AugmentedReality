@@ -66,13 +66,17 @@ $ tree .
 
 **Project description**
 
-- The `root` folder of the project contains the files: `.gitignore`, `requirements.txt` and `example_*.py`.
-- Except for the `requirements.txt` file, which is used to install the [necessary Python modules/libraries](requirements.txt), all other Python files serve as examples for marker detection.
-- The `dev/` folder contains Python scripts that support you, for example, with camera calibration and ArUco marker generation.
-- In the `src/` folder you will find two images `src/photos/` and two videos `src/videos/` that are used for the AR examples.
-- In the `dev/img/` subfolder you will find the file `pattern.png`. This pattern is needed to be printed out for camera calibration.
-- When you create new markers using the Python script `dev/generate_marker.py`, the markers are saved as *.jpg into the new subfolder within the `dev/markers/`.
-- If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
+| Directory  | Description                                                                                                |
+|------------|------------------------------------------------------------------------------------------------------------|
+| `root`     | contains the files: `.gitignore`, `requirements.txt` and `example_*.py`                                    |
+| `dev/`     | contains Python scripts that support you, for example, with camera calibration and ArUco marker generation |
+| `dev/img/` | you will find the file `pattern.png`. This pattern is needed for camera calibration                        |
+| `src/`     | you will find images `src/photos/` and videos `src/videos/` that are used for the AR examples              |
+
+
+> When you create new markers using the Python script `dev/generate_marker.py`, the markers are saved as `*.jpg` into the new subfolder within the `dev/markers/`.
+> 
+> If you have carried out a camera calibration, you will find the file `camera_params.npz` in the `src/` folder. This file will be loaded in the AR examples (_if available_).
 
 ## Prepare a local development environment
 
@@ -80,7 +84,7 @@ Various Python modules/libraries are used in this project. It is therefore recom
 
 The next commands show how the Python virtual environment is created and the installation of required modules/libraries is carried out.
 
-**Create virtualenv and install packages/modules (_commands_):**
+**Create virtualenv and install packages/modules:**
 
 ```shell
 # create virtual environment
@@ -126,7 +130,7 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 > 
 > To display the values at any time later, you can execute the Python script `dev/show_calibration.py`.
 
-**Store camera params and show params (_commands_):**
+**Store camera params and show params:**
 
 ```shell
 # run camera calibration
