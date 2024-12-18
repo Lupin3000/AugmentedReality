@@ -27,9 +27,11 @@ def calibrate_camera(object_points: np.array, image_points: list, gray_shape: tu
     """
     try:
         print("[INFO] Starting calibration...")
-        c_ret, matrix, coefficients, _, _ = cv2.calibrateCamera(
-            object_points, image_points, gray_shape[::-1], None, None
-        )
+        c_ret, matrix, coefficients, _, _ = cv2.calibrateCamera(objectPoints=object_points,
+                                                                imagePoints=image_points,
+                                                                imageSize=gray_shape[::-1],
+                                                                cameraMatrix=None,
+                                                                distCoeffs=None)
         if c_ret:
             np.savez(file=path,
                      camera_matrix=matrix.astype(np.float32),
