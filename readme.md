@@ -183,20 +183,17 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 | `example_10.py` | Displays a scaled video behind a circular mask created using all markers.                            |
 | `example_11.py` | Projects filled cubes on markers, merging them if the distance between markers is below a set value. |
 
-> In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
+> In few examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 
 > Measure one of the created ArUco markers and change the values for **MARKER_SIZE** in all example files.
 > 
 > If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in all example files too.
 
-**Execute examples (_commands_):**
+**Execute example (_commands_):**
 
 ```shell
 # execute example 01
 (.venv) $ python3 example_01.py
-
-# execute example 02
-(.venv) $ python3 example_02.py
 ```
 
 To close the window and to stop the Python script, press the **q-key**.
