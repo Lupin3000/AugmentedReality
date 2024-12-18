@@ -1,7 +1,7 @@
-import cv2
-import numpy as np
 from os.path import dirname, abspath, join
-import threading
+from threading import Thread
+import numpy as np
+import cv2
 
 
 PATTERN: tuple = (9, 6)
@@ -77,8 +77,8 @@ if __name__ == "__main__":
         elif key == ord('s') and not (calibration_thread and calibration_thread.is_alive()):
             if collected_frames >= 10:
                 output_path = join(current_file_path, FILE_PATH)
-                calibration_thread = threading.Thread(target=calibrate_camera,
-                                                      args=(obj_points, img_points, gray.shape, output_path))
+                calibration_thread = Thread(target=calibrate_camera,
+                                            args=(obj_points, img_points, gray.shape, output_path))
                 calibration_thread.start()
             else:
                 print("[ERROR] Not enough valid data to calibrate the camera! Try to capture more frames.")
