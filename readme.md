@@ -45,6 +45,7 @@ $ tree .
 |____example_08.py
 |____example_09.py
 |____example_10.py
+|____example_11.py
 |____dev
 | |____img
 | | |____pattern.png
@@ -178,6 +179,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 - `example_08.py` shows a scaled video loop on each marker, by marker id.
 - `example_09.py` shows a scaled picture between two specific markers, by marker id combination.
 - `example_10.py` shows a scaled video behind a circled mask, created by all markers.
+- `example_11.py` shows a filled cube over each marker, if distance of markers is less then specified the markers merge.
 
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 
