@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
+from typing import Sequence
 
 
 ARUCO_DICT_ID: int = cv2.aruco.DICT_4X4_50
-SMALL_RECT_COLOR: tuple = (80, 25, 200)
-BIG_RECT_COLOR: tuple = (200, 25, 80)
-MERGE_DISTANCE: int =250
+RECT_COLOR: tuple = (200, 25, 25)
+MERGE_DISTANCE: int = 250
 
 
 def aruco_detector() -> cv2.aruco.ArucoDetector:
@@ -37,6 +37,84 @@ def calculate_distance(point1: tuple[float, float], point2: tuple[float, float])
     return np.linalg.norm(np.array(point1) - np.array(point2))
 
 
+def calculate_center(corners: np.ndarray) -> tuple[int, int]:
+    """
+    Calculate the center point of an ArUco marker.
+
+    :param corners: The corners of the marker.
+    :type corners: np.ndarray
+
+    :return: The center coordinates (x, y).
+    :rtype: tuple[int, int]
+    """
+    top_left = tuple(corners[0][0].astype(int))
+    bottom_right = tuple(corners[0][2].astype(int))
+    center_x = (top_left[0] + bottom_right[0]) // 2
+    center_y = (top_left[1] + bottom_right[1]) // 2
+    return int(center_x), int(center_y)
+
+
+def draw_rectangle(frame: np.ndarray, corners: np.ndarray) -> None:
+    """
+    Draw a rectangle on the frame using the corners of the ArUco marker.
+
+    :param frame: The image on which to draw the rectangle.
+    :type frame: np.ndarray
+    :param corners: The corners of the marker to draw the rectangle around.
+    :type corners: np.ndarray
+
+    :return: None
+    """
+    top_left = tuple(corners[0][0].astype(int))
+    top_right = tuple(corners[0][1].astype(int))
+    bottom_right = tuple(corners[0][2].astype(int))
+    bottom_left = tuple(corners[0][3].astype(int))
+
+    min_x = min(top_left[0], bottom_left[0])
+    max_x = max(top_right[0], bottom_right[0])
+    min_y = min(top_left[1], top_right[1])
+    max_y = max(bottom_left[1], bottom_right[1])
+
+    cv2.rectangle(img=frame,
+                  pt1=(min_x, min_y),
+                  pt2=(max_x, max_y),
+                  color=RECT_COLOR,
+                  thickness=-1)
+
+
+def merge_markers(corners: Sequence[np.ndarray], merge_distance: int) -> list[list[int]]:
+    """
+    Merge markers if their centers are within a specified distance.
+
+    :param corners: List of marker corners.
+    :type corners: Sequence[np.ndarray]
+    :param merge_distance: The distance threshold for merging markers.
+    :type merge_distance: int
+
+    :return: A list of lists, each containing indices of markers that belong to the same merged group.
+    :rtype: list[list[int]]
+    """
+    centers = [calculate_center(marker_corners) for marker_corners in corners]
+    n = len(centers)
+    clusters = []
+
+    assigned = [False] * n
+
+    for i in range(n):
+        if not assigned[i]:
+            cluster = [i]
+            assigned[i] = True
+
+            for j in range(i + 1, n):
+                if not assigned[j] and calculate_distance(centers[i], centers[j]) < merge_distance:
+                    cluster.append(j)
+                    assigned[j] = True
+
+            clusters.append(cluster)
+
+    return clusters
+
+
 if __name__ == "__main__":
     detector = aruco_detector()
 
@@ -54,65 +132,31 @@ if __name__ == "__main__":
         corners, ids, _ = detector.detectMarkers(gray)
 
         if ids is not None:
-            merged_markers = []
-            distances = {}
-            centers = []
+            marker_clusters = merge_markers(corners, MERGE_DISTANCE)
 
-            for marker_corners in corners:
-                top_left = tuple(marker_corners[0][0].astype(int))
-                bottom_right = tuple(marker_corners[0][2].astype(int))
-                center_x = (top_left[0] + bottom_right[0]) // 2
-                center_y = (top_left[1] + bottom_right[1]) // 2
-                centers.append((center_x, center_y))
-
-            for i, center1 in enumerate(centers):
-                for j, center2 in enumerate(centers):
-                    if i < j:
-                        distances[(i, j)] = calculate_distance(center1, center2)
-
-            merged_indices = set()
-            for (i, j), dist in distances.items():
-                if dist < MERGE_DISTANCE:
-                    merged_indices.add(i)
-                    merged_indices.add(j)
-
-            if merged_indices:
+            for cluster in marker_clusters:
                 min_x, min_y, max_x, max_y = float('inf'), float('inf'), 0, 0
-                for idx in merged_indices:
+                for idx in cluster:
                     marker_corners = corners[idx]
-                    top_left = tuple(marker_corners[0][0].astype(int))
-                    top_right = tuple(marker_corners[0][1].astype(int))
-                    bottom_right = tuple(marker_corners[0][2].astype(int))
-                    bottom_left = tuple(marker_corners[0][3].astype(int))
+                    mc_top_left = tuple(marker_corners[0][0].astype(int))
+                    mc_top_right = tuple(marker_corners[0][1].astype(int))
+                    mc_bottom_right = tuple(marker_corners[0][2].astype(int))
+                    mc_bottom_left = tuple(marker_corners[0][3].astype(int))
 
-                    min_x = min(min_x, top_left[0], bottom_left[0])
-                    max_x = max(max_x, top_right[0], bottom_right[0])
-                    min_y = min(min_y, top_left[1], top_right[1])
-                    max_y = max(max_y, bottom_left[1], bottom_right[1])
+                    min_x = min(min_x, mc_top_left[0], mc_bottom_left[0])
+                    max_x = max(max_x, mc_top_right[0], mc_bottom_right[0])
+                    min_y = min(min_y, mc_top_left[1], mc_top_right[1])
+                    max_y = max(max_y, mc_bottom_left[1], mc_bottom_right[1])
 
                 cv2.rectangle(img=frame,
                               pt1=(min_x, min_y),
                               pt2=(max_x, max_y),
-                              color=BIG_RECT_COLOR,
+                              color=RECT_COLOR,
                               thickness=-1)
 
             for i, marker_corners in enumerate(corners):
-                if i not in merged_indices:
-                    top_left = tuple(marker_corners[0][0].astype(int))
-                    top_right = tuple(marker_corners[0][1].astype(int))
-                    bottom_right = tuple(marker_corners[0][2].astype(int))
-                    bottom_left = tuple(marker_corners[0][3].astype(int))
-
-                    min_x = min(top_left[0], bottom_left[0])
-                    max_x = max(top_right[0], bottom_right[0])
-                    min_y = min(top_left[1], top_right[1])
-                    max_y = max(bottom_left[1], bottom_right[1])
-
-                    cv2.rectangle(img=frame,
-                                  pt1=(min_x, min_y),
-                                  pt2=(max_x, max_y),
-                                  color=SMALL_RECT_COLOR,
-                                  thickness=-1)
+                if not any(i in cluster for cluster in marker_clusters):
+                    draw_rectangle(frame, marker_corners)
 
         cv2.imshow("AR Marker ID Detection: show rectangles and merge them below specific distance", frame)
 
