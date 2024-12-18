@@ -140,7 +140,7 @@ if __name__ == "__main__":
                 if m_ret:
                     frame = draw_image_on_marker(frame, r_vec, t_vec, matrix, coefficients, image_capture)
 
-        cv2.imshow("AR Marker Detection: show image on each marker", frame)
+        cv2.imshow("AR Marker Detection: pose estimation and show image on each marker", frame)
 
     cap.release()
     cv2.destroyAllWindows()

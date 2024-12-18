@@ -95,7 +95,7 @@ if __name__ == "__main__":
                         cv2.line(frame, tuple(image_points[j]), tuple(image_points[j + 4]), CUBE_COLOR, 2)
 
 
-        cv2.imshow("AR Marker ID Detection: show 3D cube on each marker", frame)
+        cv2.imshow("AR Marker ID Detection: pose estimation and show 3D cube on each marker", frame)
 
     cap.release()
     cv2.destroyAllWindows()

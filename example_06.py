@@ -77,7 +77,7 @@ if __name__ == "__main__":
                 if m_ret:
                     frame = cv2.drawFrameAxes(frame, matrix, coefficients, rvec, tvec, 0.05)
 
-        cv2.imshow("AR Marker ID Detection: show X, Y and Z coordination axes", frame)
+        cv2.imshow("AR Marker ID Detection: pose estimation and show X, Y and Z coordination axes", frame)
 
     cap.release()
     cv2.destroyAllWindows()
