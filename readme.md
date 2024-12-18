@@ -169,17 +169,19 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 
 ## Run examples
 
-- `example_01.py` shows for each detected marker the respective ID.
-- `example_02.py` shows for each detected marker a letter from alphabet (_max. 26 letters_).
-- `example_03.py` shows an arrow between each marker center and distance in pixel.
-- `example_04.py` shows a line between each marker center and distance in cm.
-- `example_05.py` shows a 3D cube on each marker.
-- `example_06.py` shows an X, Y, Z axes on each marker.
-- `example_07.py` shows a scaled picture on each marker, by marker id.
-- `example_08.py` shows a scaled video loop on each marker, by marker id.
-- `example_09.py` shows a scaled picture between two specific markers, by marker id combination.
-- `example_10.py` shows a scaled video behind a circled mask, created by all markers.
-- `example_11.py` show filled cubes on each marker, if distance of markers is less then specified, markers merge.
+| Example File    | Description                                                                                          |
+|-----------------|------------------------------------------------------------------------------------------------------|
+| `example_01.py` | Shows for each detected marker the respective ID.                                                    |
+| `example_02.py` | Displays a letter from the alphabet for each detected marker (max. 26 letters).                      |
+| `example_03.py` | Draws an arrow between each marker center and shows the distance in pixels.                          |
+| `example_04.py` | Draws a line between marker centers and displays the distance in centimeters.                        |
+| `example_05.py` | Projects a 3D cube on each detected marker.                                                          |
+| `example_06.py` | Displays X, Y, Z axes on each detected marker.                                                       |
+| `example_07.py` | Shows a scaled picture on each marker, based on the marker ID.                                       |
+| `example_08.py` | Displays a scaled video loop on each marker, based on the marker ID.                                 |
+| `example_09.py` | Shows a scaled picture between two specific markers, based on their marker ID combination.           |
+| `example_10.py` | Displays a scaled video behind a circular mask created using all markers.                            |
+| `example_11.py` | Projects filled cubes on markers, merging them if the distance between markers is below a set value. |
 
 > In the examples you still have to specify the length or height of the ArUco markers in meters in the Python script constant: **MARKER_SIZE** (_example: 3.5cm is 0.035m_).
 > 
