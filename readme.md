@@ -54,14 +54,9 @@ $ tree .
 | |____generate_marker.py
 |____src
 | |____videos
-| | |____demo.mp4
-| | |____video_0.mp4
-| | |____video_1.mp4
+| | |____[example files ...]
 | |____photos
-| | |____monk_0.jpg
-| | |____monk_1.jpg
-| | |____treasure_1.jpg
-| | |____treasure_2.jpg
+| | |____[example files ...]
 ```
 
 **Project description**
