@@ -18,6 +18,8 @@ Following details are explained and have examples:
 
 ## Project setup
 
+**Clone Git repository**
+
 ```shell
 # clone the project to local
 $ git clone https://github.com/Lupin3000/AugmentedReality.git
@@ -29,6 +31,8 @@ $ cd AugmentedReality/
 ## Project structure
 
 The final folders and file structure of the project (_if no calibration has yet been carried out and no markers have been generated_).
+
+**List all cloned local files and folders**
 
 ```shell
 # list all files/folder (optional)
