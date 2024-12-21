@@ -182,7 +182,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 | `example_09.py` | Shows a scaled picture between two specific markers, based on their marker ID combination.           |
 | `example_10.py` | Displays a scaled video behind a circular mask created using all markers.                            |
 | `example_11.py` | Projects filled cubes on markers, merging them if the distance between markers is below a set value. |
-| `example_12.py` | Paint a line on screen with marker id 0 and rubber line with marker id 1 from screen                 |
+| `example_12.py` | Use marker id 0 as eraser and draw with all other markers lines on screen                            |
 
 > In few examples you still have to specify the length or height of the ArUco markers for constant: **MARKER_SIZE**. The measurement value must be provided in meters (_example: 3.5cm is 0.035_).
 > 
