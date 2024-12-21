@@ -33,7 +33,6 @@ if __name__ == "__main__":
 
     canvas = None
     prev_pos = None
-    mode = None
 
     cap = cv2.VideoCapture(0)
     print("[INFO] Place ArUco markers in front of the camera.")
@@ -57,14 +56,12 @@ if __name__ == "__main__":
                 center = tuple(np.mean(corner_group[0], axis=0).astype(int))
 
                 if marker_id == 0:
-                    mode = 'erase'
                     cv2.circle(frame, center, ERASE_SIZE, PEN_COLOR[0], 2)
 
                     if prev_pos is not None:
                         cv2.line(canvas, prev_pos, center, ERASE_COLOR, ERASE_SIZE)
 
                 if 1 <= marker_id < len(PEN_COLOR):
-                    mode = 'draw'
                     cv2.circle(frame, center, PEN_SIZE, PEN_COLOR[marker_id], -1)
 
                     if prev_pos is not None:
