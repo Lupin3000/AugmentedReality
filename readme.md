@@ -111,7 +111,7 @@ $ .venv/bin/activate
 
 **Start and stop virtualenv**
 
-If you want to interrupt work on the project, that's absolute no problem! You can start and stop the Python virtual environment at any time.
+If you want to interrupt the work on this project for some time, that's absolute not a problem! You can start and stop the Python virtual environment at any time.
 
 ```shell
 # start virtualenv (project folder)
