@@ -80,7 +80,7 @@ Various Python modules/libraries are used in this project. It is therefore recom
 
 The next commands show how the Python virtual environment is created and the installation of required modules/libraries is carried out.
 
-**Create virtualenv and install packages/modules:**
+**Create/start virtualenv and install packages/modules:**
 
 ```shell
 # create virtual environment
@@ -103,6 +103,18 @@ $ .venv/bin/activate
 
 # list all modules/packages (optional)
 (.venv) $ pip3 freeze
+```
+
+**Start and stop virtualenv**
+
+If you want to interrupt work on the project, that's absolute no problem! You can start and stop the Python virtual environment at any time.
+
+```shell
+# start virtualenv (project folder)
+$ .venv/bin/activate
+
+# stop virtualenv (any folder)
+(.venv) $ deactivate
 ```
 
 ## Prepare and carry out calibration
