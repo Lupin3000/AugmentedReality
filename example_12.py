@@ -68,6 +68,8 @@ if __name__ == "__main__":
                         cv2.line(canvas, prev_pos, center, PEN_COLOR[marker_id], PEN_SIZE)
 
                 prev_pos = center
+        else:
+            prev_pos = None
 
         frame = cv2.addWeighted(frame, 0.7, canvas, 0.3, 0)
         cv2.imshow("AR Marker ID Detection: draw on screen", frame)
