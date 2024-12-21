@@ -3,9 +3,15 @@ import numpy as np
 
 
 ARUCO_DICT_ID: int = cv2.aruco.DICT_4X4_50
-PEN_COLOR: tuple = (100, 200, 200)
+PEN_SIZE: int = 10
+PEN_COLOR: dict = {
+    3: (255, 0, 0),
+    2: (0, 255, 0),
+    1: (0, 0, 255),
+    0: (255, 255, 255)
+}
 ERASE_COLOR: tuple = (0, 0, 0)
-BRUSH_SIZE: int = 10
+ERASE_SIZE: int = 20
 
 
 def aruco_detector() -> cv2.aruco.ArucoDetector:
@@ -51,17 +57,18 @@ if __name__ == "__main__":
                 center = tuple(np.mean(corner_group[0], axis=0).astype(int))
 
                 if marker_id == 0:
-                    mode = 'draw'
-                    cv2.circle(frame, center, BRUSH_SIZE, PEN_COLOR, -1)
-                elif marker_id == 1:
                     mode = 'erase'
-                    cv2.circle(frame, center, BRUSH_SIZE, (255, 255, 255), 2)
+                    cv2.circle(frame, center, ERASE_SIZE, PEN_COLOR[0], 2)
 
-                if prev_pos is not None and mode is not None:
-                    if mode == 'draw':
-                        cv2.line(canvas, prev_pos, center, PEN_COLOR, BRUSH_SIZE)
-                    elif mode == 'erase':
-                        cv2.line(canvas, prev_pos, center, ERASE_COLOR, BRUSH_SIZE)
+                    if prev_pos is not None:
+                        cv2.line(canvas, prev_pos, center, ERASE_COLOR, ERASE_SIZE)
+
+                if 1 <= marker_id < len(PEN_COLOR):
+                    mode = 'draw'
+                    cv2.circle(frame, center, PEN_SIZE, PEN_COLOR[marker_id], -1)
+
+                    if prev_pos is not None:
+                        cv2.line(canvas, prev_pos, center, PEN_COLOR[marker_id], PEN_SIZE)
 
                 prev_pos = center
 
