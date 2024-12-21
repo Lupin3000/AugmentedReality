@@ -168,11 +168,14 @@ With the Python script `dev/generate_marker.py`, you can create your own ArUco m
 
 The default of **ARUCO_DICT_ID** set is: `DICT_4X4_50`, which contains 50 predefined markers. The constant default value for **ARUCO_MARKER_ID** is `0`. For current **ARUCO_DICT_ID** the marker id's can be from `0` to `49`. The optimal value for **ARUCO_MARKER_SIZE** should be between `50` and `250`. Markers that are too small are harder to recognize.
 
-**Generate markers (_commands_):**
+**Generate markers:**
 
 ```shell
-# run marker generation for id 0
-(.venv) $ python3 dev/generate_marker.py --id 0 --size 100
+# run marker generation for id 0 / size 100 (default)
+(.venv) $ python3 dev/generate_marker.py
+
+# run marker generation for id 1 /size 100
+(.venv) $ python3 dev/generate_marker.py --id 1 --size 100
 
 # run marker generation for id 0 till 2 (example markers)
 (.venv) $ for id in {0..2}; do python3 dev/generate_marker.py --id "$id" --size 100; done
@@ -206,7 +209,7 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 > 
 > If you change the value for **ARUCO_DICT_ID**, you need to adapt the value in all example files too.
 
-**Execute example (_commands_):**
+**Execute example:**
 
 ```shell
 # execute example 01
