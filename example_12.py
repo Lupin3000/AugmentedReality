@@ -23,18 +23,23 @@ def aruco_detector() -> cv2.aruco.ArucoDetector:
     :rtype: cv2.aruco.ArucoDetector
     """
     aruco_dict = cv2.aruco.getPredefinedDictionary(ARUCO_DICT_ID)
+
     aruco_params = cv2.aruco.DetectorParameters()
+    aruco_params.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
 
     return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
 
 
 if __name__ == "__main__":
     detector = aruco_detector()
-
     canvas = None
     prev_pos = None
+    gray_template = None
 
     cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FPS, 30)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+
     print("[INFO] Place ArUco markers in front of the camera.")
     print("[INFO] Press 'q' to quit.")
 
@@ -45,12 +50,15 @@ if __name__ == "__main__":
             break
 
         if canvas is None:
-            canvas = np.zeros_like(frame)
+            canvas = np.zeros_like(frame, dtype=np.uint8)
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, _ = detector.detectMarkers(gray)
+        if gray_template is None:
+            gray_template = np.zeros((frame.shape[0], frame.shape[1]), dtype=np.uint8)
 
-        if ids is not None:
+        cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY, dst=gray_template)
+        corners, ids, _ = detector.detectMarkers(gray_template)
+
+        if ids is not None and len(ids) > 0:
             for i, corner_group in enumerate(corners):
                 marker_id = int(ids[i][0])
                 center = tuple(np.mean(corner_group[0], axis=0).astype(int))
@@ -61,7 +69,7 @@ if __name__ == "__main__":
                     if prev_pos is not None:
                         cv2.line(canvas, prev_pos, center, ERASE_COLOR, ERASE_SIZE)
 
-                if 1 <= marker_id < len(PEN_COLOR):
+                if marker_id in PEN_COLOR:
                     cv2.circle(frame, center, PEN_SIZE, PEN_COLOR[marker_id], -1)
 
                     if prev_pos is not None:
@@ -71,8 +79,8 @@ if __name__ == "__main__":
         else:
             prev_pos = None
 
-        frame = cv2.addWeighted(frame, 0.7, canvas, 0.3, 0)
-        cv2.imshow("AR Marker ID Detection: draw on screen", frame)
+        blended_frame = cv2.addWeighted(frame, 0.7, canvas, 0.3, 0.0)
+        cv2.imshow("AR Marker ID Detection: draw on screen", blended_frame)
 
     cap.release()
     cv2.destroyAllWindows()

@@ -47,7 +47,9 @@ def aruco_detector() -> cv2.aruco.ArucoDetector:
     :rtype: cv2.aruco.ArucoDetector
     """
     aruco_dict = cv2.aruco.getPredefinedDictionary(ARUCO_DICT_ID)
+
     aruco_params = cv2.aruco.DetectorParameters()
+    aruco_params.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
 
     return cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
 
@@ -100,13 +102,15 @@ def draw_image_on_marker(img: np.ndarray,
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
     example_path = join(current_file_path, EXAMPLE_PATH)
-
     matrix, coefficients = camera_calibration(current_path=current_file_path)
     detector = aruco_detector()
-
     image_cache = {}
+    gray_template = None
 
     cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FPS, 30)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+
     print("[INFO] Place ArUco markers in front of the camera.")
     print("[INFO] Press 'q' to quit.")
 
@@ -116,8 +120,11 @@ if __name__ == "__main__":
         if not ret or (cv2.waitKey(1) & 0xFF == ord('q')):
             break
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, _ = detector.detectMarkers(gray)
+        if gray_template is None:
+            gray_template = np.zeros((frame.shape[0], frame.shape[1]), dtype=np.uint8)
+
+        cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY, dst=gray_template)
+        corners, ids, _ = detector.detectMarkers(gray_template)
 
         if ids is not None:
             for i in range(len(ids)):
