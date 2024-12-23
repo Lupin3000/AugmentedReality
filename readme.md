@@ -1,4 +1,4 @@
-# Python: Augmented Reality
+# Python Open-CV: Augmented Reality
 
 This repository is intended to introduce the topic of **Python: Augmented Reality** by ArUco marker detection.
 
@@ -11,6 +11,12 @@ Following details are explained and have examples:
 - Marker interactions
 
 ## Minimum requirements
+
+[![Static](https://img.shields.io/badge/python->=3.7.x-green)](https://python.org)
+[![Static](https://img.shields.io/badge/setuptolls-75.6-green)](https://setuptools.pypa.io/en/latest/)
+[![Static](https://img.shields.io/badge/wheel-0.45-green)](https://wheel.readthedocs.io/en/stable/)
+[![Static](https://img.shields.io/badge/OpenCV-4.10-green)](https://opencv.org)
+[![Static](https://img.shields.io/badge/NumPy-2.2-green)](https://numpy.org)
 
 - tested with Python 3.7.3 on UNIHIKER (_Debian_)
 - tested with Python 3.12 on macOS
