@@ -1,4 +1,4 @@
-# Python Open-CV: Augmented Reality
+# Python OpenCV: Augmented Reality
 
 This repository is intended to introduce the topic of **Python: Augmented Reality** by ArUco marker detection.
 
