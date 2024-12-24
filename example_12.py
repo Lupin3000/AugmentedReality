@@ -1,3 +1,4 @@
+from sys import exit
 import cv2
 import numpy as np
 
@@ -40,8 +41,12 @@ if __name__ == "__main__":
     cap.set(cv2.CAP_PROP_FPS, 30)
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-    print("[INFO] Place ArUco markers in front of the camera.")
-    print("[INFO] Press 'q' to quit.")
+    if not cap.isOpened():
+        print("[ERROR] Error opening video stream.")
+        exit(1)
+    else:
+        print("[INFO] Place ArUco markers in front of the camera.")
+        print("[INFO] Press 'q' to quit.")
 
     while True:
         ret, frame = cap.read()

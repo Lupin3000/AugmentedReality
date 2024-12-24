@@ -32,8 +32,8 @@ if __name__ == "__main__":
     video_path = join(example_path, "demo.mp4")
 
     if not exists(video_path):
-        print(f"[INFO] Video file {video_path} not found.")
-        exit()
+        print(f"[ERROR] Video file {video_path} not found.")
+        exit(1)
     else:
         print(f"[INFO] Using video file: {video_path}")
 
@@ -45,8 +45,12 @@ if __name__ == "__main__":
     cap.set(cv2.CAP_PROP_FPS, 30)
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-    print("[INFO] Place ArUco markers in front of the camera.")
-    print("[INFO] Press 'q' to quit.")
+    if not cap.isOpened():
+        print("[ERROR] Error opening video stream.")
+        exit(1)
+    else:
+        print("[INFO] Place ArUco markers in front of the camera.")
+        print("[INFO] Press 'q' to quit.")
 
     while True:
         ret, frame = cap.read()

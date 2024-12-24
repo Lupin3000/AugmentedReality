@@ -1,6 +1,7 @@
+from sys import exit
+from typing import Sequence
 import cv2
 import numpy as np
-from typing import Sequence
 
 
 ARUCO_DICT_ID: int = cv2.aruco.DICT_4X4_50
@@ -125,8 +126,12 @@ if __name__ == "__main__":
     cap.set(cv2.CAP_PROP_FPS, 30)
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
-    print("[INFO] Place ArUco markers in front of the camera.")
-    print("[INFO] Press 'q' to quit.")
+    if not cap.isOpened():
+        print("[ERROR] Error opening video stream.")
+        exit(1)
+    else:
+        print("[INFO] Place ArUco markers in front of the camera.")
+        print("[INFO] Press 'q' to quit.")
 
     while True:
         ret, frame = cap.read()
