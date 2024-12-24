@@ -151,6 +151,8 @@ Calibration is typically done with a checkerboard pattern, which you can find in
 
 **Store camera params and show params:**
 
+> **Important!** Before you execute the script `dev/get_calibration.py`, adapt the constants **WINDOW_WIDTH** and **WINDOW_HEIGHT** to your camera settings.
+
 ```shell
 # run camera calibration
 (.venv) $ python3 dev/get_calibration.py
@@ -194,6 +196,8 @@ The default of **ARUCO_DICT_ID** set is: `DICT_4X4_50`, which contains 50 predef
 Print out the marker(s) on paper, cut them and glue the printed paper onto cardboard (_for stabilization_).
 
 ## Run examples
+
+> **Important!** Before you execute the example scripts, adapt the constants **WINDOW_WIDTH** and **WINDOW_HEIGHT** to your camera settings (_in each example file_).
 
 | Example File    | Description                                                                                          |
 |-----------------|------------------------------------------------------------------------------------------------------|
