@@ -1,6 +1,5 @@
 from os.path import dirname, abspath, exists, join
 from sys import exit
-from typing import Sequence
 import cv2
 import numpy as np
 
@@ -97,7 +96,8 @@ if __name__ == "__main__":
         exit(1)
     else:
         print("[INFO] Place ArUco markers in front of the camera.")
-        print("[INFO] Press 'q' or 'ESC' to quit, 'm' to save marker position, 'd' to clear positions.")
+        print("[INFO] Press 'q' or 'ESC' to quit.")
+        print("[INFO] Press 'm' to save marker position, 'd' to clear all saved positions.")
 
     while True:
         ret, frame = cap.read()
