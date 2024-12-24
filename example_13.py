@@ -105,10 +105,6 @@ if __name__ == "__main__":
         if not ret:
             break
 
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord('q') or key == 27:
-            break
-
         if frame is None or frame.size == 0:
             print("[WARNING] Empty frame. Skipping...")
             continue
@@ -140,6 +136,9 @@ if __name__ == "__main__":
                     cv2.line(frame, saved_pos, current_pos, (0, 0, 0), 2)
 
         key = cv2.waitKey(1) & 0xFF
+        if key == ord('q') or key == 27:
+            break
+
         if key == ord('m') and ids is not None:
             for i in range(len(ids)):
                 marker_id = ids[i][0]
