@@ -226,9 +226,12 @@ Print out the marker(s) on paper, cut them and glue the printed paper onto cardb
 ```shell
 # execute example 01
 (.venv) $ python3 example_01.py
+
+# execute all examples
+(.venv) $ for i in {01..13}; do python example_"$i".py; done
 ```
 
-To close the window and to stop the Python script, press the **q-key**.
+To close the window and to stop the Python script, press the **q-key** or **ESC-key**.
 
 ## Note
 
