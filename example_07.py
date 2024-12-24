@@ -129,6 +129,10 @@ if __name__ == "__main__":
         if key == ord('q') or key == 27:
             break
 
+        if frame is None or frame.size == 0:
+            print("[WARNING] Empty frame. Skipping...")
+            continue
+
         if gray_template is None:
             gray_template = np.zeros((frame.shape[0], frame.shape[1]), dtype=np.uint8)
 

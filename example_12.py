@@ -12,7 +12,7 @@ PEN_COLOR: dict = {
     0: (255, 255, 255)
 }
 ERASE_COLOR: tuple = (0, 0, 0)
-ERASE_SIZE: int = 20
+ERASE_SIZE: int = 25
 
 
 def aruco_detector() -> cv2.aruco.ArucoDetector:
@@ -58,6 +58,10 @@ if __name__ == "__main__":
         if key == ord('q') or key == 27:
             break
 
+        if frame is None or frame.size == 0:
+            print("[WARNING] Empty frame. Skipping...")
+            continue
+
         if canvas is None:
             canvas = np.zeros_like(frame, dtype=np.uint8)
 
@@ -78,7 +82,7 @@ if __name__ == "__main__":
                     if prev_pos is not None:
                         cv2.line(canvas, prev_pos, center, ERASE_COLOR, ERASE_SIZE)
 
-                if marker_id in PEN_COLOR:
+                if marker_id < len(PEN_COLOR):
                     cv2.circle(frame, center, PEN_SIZE, PEN_COLOR[marker_id], -1)
 
                     if prev_pos is not None:
