@@ -1,8 +1,13 @@
 from os.path import dirname, abspath, join
+from sys import exit
 from threading import Thread
 import numpy as np
 import cv2
 
+
+WINDOW_WIDTH: int = 1152
+WINDOW_HEIGHT: int = 720
+FPS: int = 30
 
 PATTERN: tuple = (9, 6)
 SQUARE_SIZE: float = 0.024
@@ -49,6 +54,7 @@ def calibrate_camera(object_points: np.array, image_points: list, gray_shape: tu
 
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
+    gray_template = None
 
     obj_points = []
     img_points = []
@@ -60,18 +66,37 @@ if __name__ == "__main__":
     collected_frames = 0
 
     cap = cv2.VideoCapture(0)
-    print("[INFO] Place chessboard pattern in front of the camera.")
-    print("[INFO] Press 'q' to quit.")
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, WINDOW_WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, WINDOW_HEIGHT)
+    cap.set(cv2.CAP_PROP_FPS, FPS)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+
+    if not cap.isOpened():
+        print("[ERROR] Error opening video stream.")
+        exit(1)
+    else:
+        print("[INFO] Place chessboard pattern in front of the camera.")
+        print("[INFO] Press 'q' or 'ESC' to quit.")
 
     while True:
         ret, frame = cap.read()
 
         if not ret:
-            print("[ERROR] Failed to read from the camera.")
             break
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        found, corners = cv2.findChessboardCorners(gray, PATTERN, None)
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q') or key == 27:
+            break
+
+        if frame is None or frame.size == 0:
+            print("[WARNING] Empty frame. Skipping...")
+            continue
+
+        if gray_template is None:
+            gray_template = np.zeros((frame.shape[0], frame.shape[1]), dtype=np.uint8)
+
+        cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY, dst=gray_template)
+        found, corners = cv2.findChessboardCorners(gray_template, PATTERN, None)
 
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
@@ -80,7 +105,7 @@ if __name__ == "__main__":
             if collected_frames >= 10:
                 output_path = join(current_file_path, FILE_PATH)
                 calibration_thread = Thread(target=calibrate_camera,
-                                            args=(obj_points, img_points, gray.shape, output_path))
+                                            args=(obj_points, img_points, gray_template.shape, output_path))
                 calibration_thread.start()
             else:
                 print("[ERROR] Not enough valid data to calibrate the camera! Try to capture more frames.")

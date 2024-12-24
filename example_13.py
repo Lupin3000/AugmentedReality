@@ -78,37 +78,6 @@ def calculate_distance(point1: tuple[float, float], point2: tuple[float, float])
     return np.linalg.norm(np.array(point1) - np.array(point2))
 
 
-def draw_line_with_distance(frame: np.array, point1: Sequence, point2: Sequence) -> None:
-    """
-    Draws a line between two points on an image frame, calculates the Euclidean distance
-    between them, and displays the distance in centimeters near the midpoint of the line.
-    This function modifies the input frame by overlaying the line and the distance text.
-
-    :param frame: The image where the line and distance will be drawn and displayed.
-    :type frame: np.array
-    :param point1: The coordinates of the starting point of the line.
-    :type point1: Sequence
-    :param point2: The coordinates of the ending point of the line.
-    :type point2: Sequence
-
-    :return: This function does not return any value but modifies the frame directly.
-    :rtype: None
-    """
-    cv2.line(frame, point1, point2, (0, 0, 0), 2)
-
-    distance = np.linalg.norm(np.array(point1) - np.array(point2))
-    distance_cm = (distance / MARKER_SIZE) * 100
-
-    mid_point = ((point1[0] + point2[0]) // 2, (point1[1] + point2[1]) // 2)
-    cv2.putText(img=frame,
-                text=f"{distance_cm:.2f} cm",
-                org=mid_point,
-                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                fontScale=FONT_SCALE,
-                color=FONT_COLOR,
-                thickness=FONT_THICKNESS)
-
-
 if __name__ == "__main__":
     current_file_path = dirname(abspath(__file__))
     matrix, coefficients = camera_calibration(current_path=current_file_path)
@@ -168,7 +137,7 @@ if __name__ == "__main__":
                     cv2.circle(frame, saved_pos, 5, color, -1)
                     cv2.circle(frame, current_pos, 5, color, -1)
 
-                    draw_line_with_distance(frame, saved_pos, current_pos)
+                    cv2.line(frame, saved_pos, current_pos, (0, 0, 0), 2)
 
         key = cv2.waitKey(1) & 0xFF
         if key == ord('m') and ids is not None:
