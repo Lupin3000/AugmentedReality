@@ -117,12 +117,16 @@ if __name__ == "__main__":
         exit(1)
     else:
         print("[INFO] Place ArUco markers in front of the camera.")
-        print("[INFO] Press 'q' to quit.")
+        print("[INFO] Press 'q' or 'ESC' to quit.")
 
     while True:
         ret, frame = cap.read()
 
-        if not ret or (cv2.waitKey(1) & 0xFF == ord('q')):
+        if not ret:
+            break
+
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q') or key == 27:
             break
 
         if gray_template is None:
