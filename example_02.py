@@ -3,7 +3,12 @@ import cv2
 import numpy as np
 
 
+WINDOW_WIDTH: int = 1152
+WINDOW_HEIGHT: int = 720
+FPS: int = 30
+
 ARUCO_DICT_ID: int = cv2.aruco.DICT_4X4_50
+
 FONT_COLOR: tuple = (100, 200, 200)
 FONT_SCALE: float = 5.0
 FONT_THICKNESS: int = 5
@@ -46,7 +51,9 @@ if __name__ == "__main__":
     gray_template = None
 
     cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FPS, 30)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, WINDOW_WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, WINDOW_HEIGHT)
+    cap.set(cv2.CAP_PROP_FPS, FPS)
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
     if not cap.isOpened():

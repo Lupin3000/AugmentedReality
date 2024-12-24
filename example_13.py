@@ -5,6 +5,10 @@ import cv2
 import numpy as np
 
 
+WINDOW_WIDTH: int = 1152
+WINDOW_HEIGHT: int = 720
+FPS: int = 30
+
 MARKER_SIZE: float = 0.035
 ARUCO_DICT_ID: int = cv2.aruco.DICT_4X4_50
 OBJ_POINTS: np.ndarray = np.array([
@@ -14,6 +18,7 @@ OBJ_POINTS: np.ndarray = np.array([
         [0, MARKER_SIZE, 0]
     ], dtype=np.float32)
 FILE_PARAMS_PATH: str = "src/camera_params.npz"
+
 FONT_COLOR: tuple = (25, 25, 25)
 FONT_SCALE: float = 0.75
 FONT_THICKNESS: int = 2
@@ -113,7 +118,9 @@ if __name__ == "__main__":
     gray_template = None
 
     cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FPS, 30)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, WINDOW_WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, WINDOW_HEIGHT)
+    cap.set(cv2.CAP_PROP_FPS, FPS)
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
     if not cap.isOpened():
