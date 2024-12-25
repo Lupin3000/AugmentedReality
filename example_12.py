@@ -89,7 +89,7 @@ if __name__ == "__main__":
                     if prev_pos is not None:
                         cv2.line(canvas, prev_pos, center, ERASE_COLOR, ERASE_SIZE)
 
-                if marker_id < len(PEN_COLOR):
+                elif marker_id >= 1 and marker_id in PEN_COLOR:
                     cv2.circle(frame, center, PEN_SIZE, PEN_COLOR[marker_id], -1)
 
                     if prev_pos is not None:
