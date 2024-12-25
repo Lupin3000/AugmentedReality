@@ -94,6 +94,8 @@ if __name__ == "__main__":
 
                     if prev_pos is not None:
                         cv2.line(canvas, prev_pos, center, PEN_COLOR[marker_id], PEN_SIZE)
+                else:
+                    print(f"[WARNING] Unknown marker ID: {marker_id}")
 
                 prev_pos = center
         else:
